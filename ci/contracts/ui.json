@@ -1,0 +1,37 @@
+{
+  "contract_version": 1,
+  "app": "glorykickboxingfans",
+  "baseline_commit": "6931489369750c9229d2a24d2b57472c9b12f268",
+  "status": "SIX_DEVICE_CASES_PASSED_API36",
+  "architecture": "Java support-library Activity and Fragment with XML Views",
+  "data_source": "static resources only; no backend or transport exists",
+  "fake_transport_required": false,
+  "cases": [
+    {
+      "id": "launch",
+      "expected": "Original title/content/package, min24/target36 and no requested permissions; safe content bounds and readable system icons"
+    },
+    {
+      "id": "fab",
+      "expected": "Original Snackbar message visible inside safe area; null-listener action remains hidden"
+    },
+    {
+      "id": "settings",
+      "expected": "Settings is handled without navigation or backend work"
+    },
+    {
+      "id": "recreation",
+      "expected": "Static content, inset bounds and icon appearance survive Activity recreation"
+    },
+    {
+      "id": "landscape",
+      "expected": "Landscape configuration and toolbar/content/FAB bounds stay clear of system bars/cutout"
+    },
+    {
+      "id": "back",
+      "expected": "System Back leaves the resumed single launcher screen"
+    }
+  ],
+  "coverage": "Four JVM tests passed; six API36 device cases passed. Font scale, API24/API29 devices and screenshot golden comparisons are not verified.",
+  "future_extension": "Introduce fixtures only when an actual app data boundary exists; do not add a synthetic feed/backend to satisfy the kit"
+}

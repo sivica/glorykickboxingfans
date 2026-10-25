@@ -1,0 +1,47 @@
+name: Android unsigned checks
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: glory-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unsigned-checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: '21'
+          overwrite-settings: false
+      - name: Verify reviewed wrapper and preinstalled SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' 'ad16bca46cb71bb5887c546860d93992aeee35c1fdaf4a242b0a612375d937e0  gradle/wrapper/gradle-wrapper.jar' | sha256sum --check --strict
+          test -n "${ANDROID_HOME:-}"
+          test -f "$ANDROID_HOME/platforms/android-36/android.jar"
+          test -x "$ANDROID_HOME/build-tools/35.0.0/aapt2"
+          java -version
+      - name: Build unsigned APK and bundle; lint and JVM tests
+        shell: bash
+        env:
+          GRADLE_USER_HOME: ${{ runner.temp }}/glory-gradle
+          ANDROID_USER_HOME: ${{ runner.temp }}/glory-android
+        run: |
+          set -euo pipefail
+          ./gradlew --no-daemon --no-build-cache --no-configuration-cache --console=plain \
+            -Dorg.gradle.jvmargs='-Xmx2g -XX:MaxMetaspaceSize=512m -XX:-HeapDumpOnOutOfMemoryError' \
+            -Pandroid.builder.sdkDownload=false --init-script ci/unsigned-debug.init.gradle \
+            :app:assembleDebug :app:bundleRelease :app:testDebugUnitTest :app:lintDebug :app:compileDebugAndroidTestJavaWithJavac

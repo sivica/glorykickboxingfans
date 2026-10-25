@@ -41,3 +41,12 @@ project.properties
 ##Gradle-based build
 .gradle
 build/
+
+# Local signing credentials and distribution artifacts never belong in source.
+*.aab
+*.jks
+*.keystore
+*.p12
+*.pfx
+/private-signing/
+/private-artifacts/
