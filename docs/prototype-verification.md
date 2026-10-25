@@ -1,5 +1,9 @@
 # Prototype implementation and evidence
 
+Current results and review fixes: [verification follow-up](review-follow-up.md).
+The original18-case milestone below is retained as historical evidence; current
+results are22 Python,25 JVM and29 device cases.
+
 Design reference: [editable Figma frames](https://www.figma.com/design/Dnm0hwiCkUIi4lNqC9oNKg).
 Read-only design-to-code inspection used archive3:43, event3:44, fighter3:45,
 no-results3:47, correction3:50, missing-result3:51, tokens6:54 and large-text11:105.
