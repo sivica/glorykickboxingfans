@@ -28,7 +28,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
     implementation 'com.android.support:appcompat-v7:23.1.1'
     // AndroidX is used only by the device-test harness; production UI stays support/XML.
     androidTestImplementation 'androidx.test:core:1.7.0'

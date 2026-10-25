@@ -90,5 +90,41 @@ class ArchiveDataTests(unittest.TestCase):
             validate(self.data)
 
 
+    def method_correction(self, previous, current, ident='demo-correction-method', start=1, end=2):
+        bout = self.data['events'][0]['bouts'][0]
+        return dict(id=ident, from_revision=start, to_revision=end, target_id=bout['id'],
+                    field='method', previous_value=previous, new_value=current,
+                    reason='Original fictional correction test', provenance=['demo-source-original'])
+
+    def test_nullable_method_correction_transitions(self):
+        for previous, current in ((None, 'KO'), ('KO', None)):
+            with self.subTest(previous=previous, current=current):
+                self.setUp()
+                self.data['events'][0]['bouts'][0]['method'] = current
+                self.data['corrections'].append(self.method_correction(previous,current))
+                validate(self.data)
+
+    def test_nullable_method_correction_chains(self):
+        for first, middle, last in (('KO', None, 'KO'), (None, 'KO', None)):
+            with self.subTest(first=first):
+                self.setUp(); self.data['revision'] = 3
+                self.data['events'][0]['bouts'][0]['method'] = last
+                self.data['corrections'] += [self.method_correction(first,middle), self.method_correction(middle,last,'demo-correction-method-two',2,3)]
+                validate(self.data)
+
+    def test_null_history_is_not_allowed_for_name(self):
+        for key in ('previous_value','new_value'):
+            with self.subTest(key=key):
+                self.setUp();self.invalid(lambda d: d['corrections'][0].update({key:None}))
+
+    def test_broken_nullable_method_history_rejected(self):
+        self.data['revision'] = 3
+        self.data['corrections'] += [self.method_correction('KO',None),self.method_correction('Wrong','KO','demo-correction-method-two',2,3)]
+        with self.assertRaises(ValueError):validate(self.data)
+
+    def test_correction_id_cannot_collide_with_tournament(self):
+        self.invalid(lambda d: d['corrections'][0].update(id=d['events'][0]['bouts'][0]['tournament']['id']))
+
+
 if __name__ == '__main__':
     unittest.main()

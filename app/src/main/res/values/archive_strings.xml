@@ -27,9 +27,10 @@
     <string name="archive_bout_label">BOUT %1$02d · %2$s</string>
     <string name="archive_bout_demo">SYNTHETIC</string>
     <string name="archive_fighter_outcome">%1$s · %2$s</string>
-    <string name="archive_fighter_link">%1$s. %2$s. View included appearances</string>
-    <string name="archive_bout_method">%1$s · Round %2$d</string>
-    <string name="archive_method_missing">Method or round unavailable</string>
+    <string name="archive_fighter_link">%1$s. %2$s. View included appearances. Fictional demonstration.</string>
+    <string name="archive_method_missing">Method unavailable</string>
+    <string name="archive_round">Round %1$d</string>
+    <string name="archive_round_missing">Round unavailable</string>
     <string name="archive_missing_result">Result not recorded. No winner assigned.</string>
     <string name="archive_cancelled">Cancelled bout · No result</string>
     <string name="archive_synthetic_result">Synthetic result · Not a real bout</string>

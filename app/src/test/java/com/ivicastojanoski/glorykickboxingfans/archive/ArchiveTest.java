@@ -86,4 +86,38 @@ public class ArchiveTest {
         Archive.Event event = event("demo-event-a", "2025-01-01", bout("demo-bout-two", 2, "completed", "draw", "demo-fighter-a", "demo-fighter-b"), bout("demo-bout-one", 1, "completed", "draw", "demo-fighter-a", "demo-fighter-b"));
         assertEquals("demo-bout-one", data(Collections.singletonList(event), Collections.emptyList()).events.get(0).bouts.get(0).id);
     }
+
+    private static Archive withMethod(String method, int revision, List<Archive.Correction> corrections) {
+        Archive.Bout bout = new Archive.Bout("demo-bout-method", 1, "demo-fighter-a", "demo-fighter-b", "completed", "red_win", method, 2, null, null, SOURCE);
+        Archive base = data(Collections.singletonList(event("demo-event-method", "2025-01-01", bout)), Collections.emptyList());
+        return new Archive(base.id, revision, base.title, base.notice, base.coverage, base.sources, base.fighters, base.events, corrections);
+    }
+    private static Archive.Correction methodChange(String id, int from, int to, String before, String after) {
+        return new Archive.Correction(id, from, to, "demo-bout-method", "method", before, after, "Fictional correction test", SOURCE);
+    }
+    @Test public void methodCorrectionNullToKnownRetainsTruth() {
+        Archive archive=withMethod("KO",2,Collections.singletonList(methodChange("demo-correction-method",1,2,null,"KO")));
+        assertNull(archive.corrections.get(0).previousValue);assertEquals("KO",archive.corrections.get(0).newValue);
+    }
+    @Test public void methodCorrectionKnownToNullRetainsTruth() {
+        Archive archive=withMethod(null,2,Collections.singletonList(methodChange("demo-correction-method",1,2,"KO",null)));
+        assertEquals("KO",archive.corrections.get(0).previousValue);assertNull(archive.corrections.get(0).newValue);
+    }
+    @Test public void nullableCorrectionChainsSupportBothTransitions() {
+        for(String[] values:new String[][] {{"KO",null,"KO"},{null,"KO",null}}) {
+            Archive archive=withMethod(values[2],3,Arrays.asList(methodChange("demo-correction-one",1,2,values[0],values[1]),methodChange("demo-correction-two",2,3,values[1],values[2])));
+            assertEquals(values[2],archive.corrections.get(1).newValue);
+        }
+    }
+    @Test(expected=IllegalArgumentException.class) public void nullRemainsInvalidForNonNullableFields() {
+        data(sample().events, Collections.singletonList(new Archive.Correction("demo-correction-name",1,2,"demo-fighter-a","name",null,"Áster Vale","Name cannot be null",SOURCE)));
+    }
+    @Test(expected=IllegalArgumentException.class) public void brokenNullableHistoryIsRejected() {
+        withMethod("KO",3,Arrays.asList(methodChange("demo-correction-one",1,2,"KO",null),methodChange("demo-correction-two",2,3,"Wrong","KO")));
+    }
+    @Test(expected=IllegalArgumentException.class) public void correctionCannotUseTournamentIdentity() {
+        Archive.Bout bout=new Archive.Bout("demo-bout-collision",1,"demo-fighter-a","demo-fighter-b","completed","red_win","KO",2,"demo-tournament-shared","final",SOURCE);
+        data(Collections.singletonList(event("demo-event-a","2025-01-01",bout)),Collections.singletonList(new Archive.Correction("demo-tournament-shared",1,2,"demo-fighter-a","name","Prior","Áster Vale","Collision must fail",SOURCE)));
+    }
+
 }

@@ -48,6 +48,36 @@ public class ArchiveReaderTest {
         JSONObject root = new JSONObject(bundled()); root.put("revision", "2"); invalid(root.toString());
     }
     @Test public void malformedDataDoesNotSubstituteInventedResults() throws Exception { invalid("{malformed"); }
+    private JSONObject change(String id, String field, Object before, Object after, int from, int to) throws Exception {
+        return new JSONObject().put("id",id).put("from_revision",from).put("to_revision",to)
+                .put("target_id", "demo-bout-north-final").put("field",field)
+                .put("previous_value", before==null ? JSONObject.NULL : before).put("new_value",after==null ? JSONObject.NULL : after)
+                .put("reason","Original fictional correction test").put("provenance",new org.json.JSONArray().put("demo-source-original"));
+    }
+    @Test public void nullableMethodCorrectionsRoundTripTruthfully() throws Exception {
+        for(String[] values:new String[][] {{null,"KO"},{"KO",null}}) {
+            JSONObject root=new JSONObject(bundled());
+            root.getJSONArray("events").getJSONObject(0).getJSONArray("bouts").getJSONObject(0).put("method",values[1]==null ? JSONObject.NULL : values[1]);
+            root.getJSONArray("corrections").put(change("demo-correction-method","method",values[0],values[1],1,2));
+            Archive archive=ArchiveReader.parse(root.toString());
+            assertEquals(values[0],archive.corrections.get(1).previousValue);assertEquals(values[1],archive.corrections.get(1).newValue);
+        }
+    }
+    @Test public void nullableMethodHistoryChainsRoundTrip() throws Exception {
+        for(String[] values:new String[][] {{"KO",null,"KO"},{null,"KO",null}}) {
+            JSONObject root=new JSONObject(bundled());root.put("revision",3);
+            root.getJSONArray("events").getJSONObject(0).getJSONArray("bouts").getJSONObject(0).put("method",values[2]==null ? JSONObject.NULL : values[2]);
+            root.getJSONArray("corrections").put(change("demo-correction-one","method",values[0],values[1],1,2));
+            root.getJSONArray("corrections").put(change("demo-correction-two","method",values[1],values[2],2,3));
+            Archive archive=ArchiveReader.parse(root.toString());assertEquals(values[2],archive.corrections.get(2).newValue);
+        }
+    }
+    @Test public void nullHistoryRemainsInvalidForName() throws Exception {
+        JSONObject root=new JSONObject(bundled());root.getJSONArray("corrections").getJSONObject(0).put("previous_value",JSONObject.NULL);invalid(root.toString());
+    }
+    @Test public void correctionTournamentIdentityCollisionFailsClosed() throws Exception {
+        JSONObject root=new JSONObject(bundled());root.getJSONArray("corrections").getJSONObject(0).put("id","demo-tournament-northern");invalid(root.toString());
+    }
     private static void invalid(String json) throws Exception {
         try {
             ArchiveReader.read(new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8)));

@@ -85,7 +85,7 @@ public abstract class ArchiveScreen extends AppCompatActivity {
         ((TextView) card.findViewById(R.id.card_meta)).setText(metadata);
         ((TextView) card.findViewById(R.id.card_detail)).setText(detail);
         card.setTag(tag);
-        card.setContentDescription(title + ". " + metadata + ". " + detail + ". " + getString(R.string.archive_view_results));
+        card.setContentDescription(eyebrow + ". " + title + ". " + metadata + ". " + detail + ". " + getString(R.string.archive_view_results));
         card.setAccessibilityDelegate(new View.AccessibilityDelegate() {
             @Override public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
                 super.onInitializeAccessibilityNodeInfo(host, info); info.setClassName(Button.class.getName());
@@ -101,8 +101,10 @@ public abstract class ArchiveScreen extends AppCompatActivity {
     protected String metadata(Archive.Event event) { return getString(R.string.archive_meta, date(event.date), event.location); }
     protected String boutDetail(Archive.Bout bout) {
         if (bout.status.equals("cancelled")) return getString(R.string.archive_cancelled);
-        if (bout.result.equals("unknown")) return getString(R.string.archive_missing_result);
-        return bout.method != null && bout.round != null ? getString(R.string.archive_bout_method, bout.method, bout.round) : getString(R.string.archive_method_missing);
+        String method = bout.method == null ? getString(R.string.archive_method_missing) : bout.method;
+        String round = bout.round == null ? getString(R.string.archive_round_missing) : getString(R.string.archive_round, bout.round);
+        String details = getString(R.string.archive_meta, method, round);
+        return bout.result.equals("unknown") ? getString(R.string.archive_missing_result) + "\n" + details : details;
     }
     protected void provenanceAction(LinearLayout parent, List<String> sources) {
         Button button = action(getString(R.string.archive_provenance_action), () -> new AlertDialog.Builder(this)

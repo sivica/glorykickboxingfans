@@ -69,7 +69,8 @@ public final class ArchiveReader {
         for (int i = 0; i < rows.length(); i++) {
             JSONObject row = rows.getJSONObject(i); keys(row, "id from_revision to_revision target_id field previous_value new_value reason provenance");
             corrections.add(new Archive.Correction(string(row, "id"), number(row, "from_revision"), number(row, "to_revision"),
-                    string(row, "target_id"), string(row, "field"), string(row, "previous_value"), string(row, "new_value"), string(row, "reason"), strings(row, "provenance")));
+                    string(row, "target_id"), string(row, "field"), row.isNull("previous_value") ? null : string(row, "previous_value"),
+                    row.isNull("new_value") ? null : string(row, "new_value"), string(row, "reason"), strings(row, "provenance")));
         }
         return new Archive(string(root, "id"), number(root, "revision"), string(root, "title"), string(root, "notice"), string(root, "coverage"), sources, fighters, events, corrections);
     }
