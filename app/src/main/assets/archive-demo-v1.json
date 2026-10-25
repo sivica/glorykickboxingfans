@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "id": "demo-archive",
+  "revision": 2,
+  "kind": "synthetic-demo",
+  "title": "Fictional event archive",
+  "notice": "DEMO DATA \u2014 all events, fighters and results are fictional. Unofficial prototype; not affiliated with GLORY.",
+  "coverage": "Included demonstration events only. Fighter appearances are not complete career histories.",
+  "sources": [
+    {
+      "id": "demo-source-original",
+      "kind": "synthetic",
+      "label": "Original fictional demonstration data; no factual sports source"
+    }
+  ],
+  "fighters": [
+    {
+      "id": "demo-fighter-aster",
+      "name": "Aster Vale",
+      "aliases": [
+        "The Navigator"
+      ],
+      "provenance": [
+        "demo-source-original"
+      ]
+    },
+    {
+      "id": "demo-fighter-rowan",
+      "name": "Rowan Flint",
+      "aliases": [
+        "North Star"
+      ],
+      "provenance": [
+        "demo-source-original"
+      ]
+    },
+    {
+      "id": "demo-fighter-sable",
+      "name": "Sable Reed",
+      "aliases": [],
+      "provenance": [
+        "demo-source-original"
+      ]
+    },
+    {
+      "id": "demo-fighter-cedar",
+      "name": "Cedar Quinn",
+      "aliases": [
+        "CQ"
+      ],
+      "provenance": [
+        "demo-source-original"
+      ]
+    },
+    {
+      "id": "demo-fighter-lumen",
+      "name": "Lumen Ash",
+      "aliases": [
+        "L. Ash"
+      ],
+      "provenance": [
+        "demo-source-original"
+      ]
+    },
+    {
+      "id": "demo-fighter-orion",
+      "name": "Orion Moss",
+      "aliases": [],
+      "provenance": [
+        "demo-source-original"
+      ]
+    },
+    {
+      "id": "demo-fighter-indigo",
+      "name": "Indigo Wren",
+      "aliases": [],
+      "provenance": [
+        "demo-source-original"
+      ]
+    },
+    {
+      "id": "demo-fighter-ember",
+      "name": "Ember Lake",
+      "aliases": [],
+      "provenance": [
+        "demo-source-original"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "demo-event-northern-2025",
+      "title": "Northern Lights",
+      "date": "2025-11-08",
+      "venue": "Fictional Northport Hall",
+      "location": "Northport",
+      "aliases": [
+        "Northern demo tournament"
+      ],
+      "coverage": "complete-demo-card",
+      "provenance": [
+        "demo-source-original"
+      ],
+      "bouts": [
+        {
+          "id": "demo-bout-north-final",
+          "order": 1,
+          "red_id": "demo-fighter-aster",
+          "blue_id": "demo-fighter-cedar",
+          "status": "completed",
+          "result": "red_win",
+          "method": "KO",
+          "round": 2,
+          "tournament": {
+            "id": "demo-tournament-northern",
+            "stage": "final"
+          },
+          "provenance": [
+            "demo-source-original"
+          ]
+        },
+        {
+          "id": "demo-bout-north-feature",
+          "order": 2,
+          "red_id": "demo-fighter-sable",
+          "blue_id": "demo-fighter-rowan",
+          "status": "completed",
+          "result": "draw",
+          "method": "Draw",
+          "round": 3,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        },
+        {
+          "id": "demo-bout-north-semi-a",
+          "order": 3,
+          "red_id": "demo-fighter-aster",
+          "blue_id": "demo-fighter-orion",
+          "status": "completed",
+          "result": "red_win",
+          "method": "Decision",
+          "round": 3,
+          "tournament": {
+            "id": "demo-tournament-northern",
+            "stage": "semifinal"
+          },
+          "provenance": [
+            "demo-source-original"
+          ]
+        },
+        {
+          "id": "demo-bout-north-semi-b",
+          "order": 4,
+          "red_id": "demo-fighter-cedar",
+          "blue_id": "demo-fighter-lumen",
+          "status": "completed",
+          "result": "red_win",
+          "method": "Decision",
+          "round": 3,
+          "tournament": {
+            "id": "demo-tournament-northern",
+            "stage": "semifinal"
+          },
+          "provenance": [
+            "demo-source-original"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demo-event-harbor-2025",
+      "title": "Harbor Sessions",
+      "date": "2025-06-14",
+      "venue": "Fictional Harbor City Hall",
+      "location": "Harbor City",
+      "aliases": [],
+      "coverage": "complete-demo-card",
+      "provenance": [
+        "demo-source-original"
+      ],
+      "bouts": [
+        {
+          "id": "demo-bout-harbor-main",
+          "order": 1,
+          "red_id": "demo-fighter-ember",
+          "blue_id": "demo-fighter-indigo",
+          "status": "completed",
+          "result": "blue_win",
+          "method": "TKO",
+          "round": 2,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        },
+        {
+          "id": "demo-bout-harbor-nc",
+          "order": 2,
+          "red_id": "demo-fighter-rowan",
+          "blue_id": "demo-fighter-orion",
+          "status": "completed",
+          "result": "no_contest",
+          "method": "No contest",
+          "round": 1,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        },
+        {
+          "id": "demo-bout-harbor-cancelled",
+          "order": 3,
+          "red_id": "demo-fighter-lumen",
+          "blue_id": "demo-fighter-sable",
+          "status": "cancelled",
+          "result": "not_applicable",
+          "method": null,
+          "round": null,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demo-event-summit-2024",
+      "title": "Summit Assembly",
+      "date": "2024-09-21",
+      "venue": "Fictional Highridge Hall",
+      "location": "Highridge",
+      "aliases": [],
+      "coverage": "partial-demo-card",
+      "provenance": [
+        "demo-source-original"
+      ],
+      "bouts": [
+        {
+          "id": "demo-bout-summit-main",
+          "order": 1,
+          "red_id": "demo-fighter-cedar",
+          "blue_id": "demo-fighter-indigo",
+          "status": "completed",
+          "result": "blue_win",
+          "method": "Decision",
+          "round": 3,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        },
+        {
+          "id": "demo-bout-summit-support",
+          "order": 2,
+          "red_id": "demo-fighter-aster",
+          "blue_id": "demo-fighter-ember",
+          "status": "completed",
+          "result": "red_win",
+          "method": "TKO",
+          "round": 1,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        },
+        {
+          "id": "demo-bout-summit-unknown",
+          "order": 3,
+          "red_id": "demo-fighter-lumen",
+          "blue_id": "demo-fighter-rowan",
+          "status": "unknown",
+          "result": "unknown",
+          "method": null,
+          "round": null,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demo-event-midnight-2024",
+      "title": "Midnight Circuit",
+      "date": "2024-02-17",
+      "venue": "Fictional Westhaven Hall",
+      "location": "Westhaven",
+      "aliases": [],
+      "coverage": "complete-demo-card",
+      "provenance": [
+        "demo-source-original"
+      ],
+      "bouts": [
+        {
+          "id": "demo-bout-midnight-main",
+          "order": 1,
+          "red_id": "demo-fighter-orion",
+          "blue_id": "demo-fighter-sable",
+          "status": "completed",
+          "result": "blue_win",
+          "method": "Decision",
+          "round": 3,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        },
+        {
+          "id": "demo-bout-midnight-support",
+          "order": 2,
+          "red_id": "demo-fighter-indigo",
+          "blue_id": "demo-fighter-lumen",
+          "status": "completed",
+          "result": "draw",
+          "method": "Draw",
+          "round": 3,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demo-event-first-2023",
+      "title": "First Bell",
+      "date": "2023-05-06",
+      "venue": "Fictional Brookfield Hall",
+      "location": "Brookfield",
+      "aliases": [],
+      "coverage": "complete-demo-card",
+      "provenance": [
+        "demo-source-original"
+      ],
+      "bouts": [
+        {
+          "id": "demo-bout-first-main",
+          "order": 1,
+          "red_id": "demo-fighter-rowan",
+          "blue_id": "demo-fighter-aster",
+          "status": "completed",
+          "result": "red_win",
+          "method": "Decision",
+          "round": 3,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        },
+        {
+          "id": "demo-bout-first-support",
+          "order": 2,
+          "red_id": "demo-fighter-ember",
+          "blue_id": "demo-fighter-cedar",
+          "status": "completed",
+          "result": "blue_win",
+          "method": "Decision",
+          "round": 3,
+          "tournament": null,
+          "provenance": [
+            "demo-source-original"
+          ]
+        }
+      ]
+    }
+  ],
+  "corrections": [
+    {
+      "id": "demo-correction-001",
+      "from_revision": 1,
+      "to_revision": 2,
+      "target_id": "demo-fighter-aster",
+      "field": "name",
+      "previous_value": "Aster Vail",
+      "new_value": "Aster Vale",
+      "reason": "Synthetic spelling correction demonstrating retained provenance",
+      "provenance": [
+        "demo-source-original"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,16 @@
 # Glory Kickboxing Fans
 
+## Fan archive foundation (draft increment)
+
+The offline foundation bundles **fictional demonstration data only**: 5 events,
+8 fighters and 14 bouts. It introduces no network, account, permission or backend.
+No factual GLORY-site dataset is approved or included. The original launcher UI
+is unchanged by this foundation slice; product screens follow as a reviewed step.
+See [data contract](docs/archive-data-contract.md) and [schema](docs/archive-schema-v1.json).
+`scripts/validate_archive.py` and Python negative tests run in the unsigned CI gate;
+production plain-Java domain behavior is covered by JVM tests. These are separate
+from Android JSON-loader/device and future signed-release acceptance evidence.
+
 This is still the original Java/XML **Hello World template**: a title, placeholder
 fragment, floating action button Snackbar and Settings menu. No kickboxing feed,
 backend, authentication, GPS or product data has been added.

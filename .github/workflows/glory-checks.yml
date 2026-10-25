@@ -34,6 +34,14 @@ jobs:
           test -f "$ANDROID_HOME/platforms/android-36/android.jar"
           test -x "$ANDROID_HOME/build-tools/35.0.0/aapt2"
           java -version
+      - name: Validate synthetic archive and negative data contracts
+        shell: bash
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          set -euo pipefail
+          python3 scripts/validate_archive.py
+          python3 -m unittest discover -s tests -v
       - name: Build unsigned APK and bundle; lint and JVM tests
         shell: bash
         env:
