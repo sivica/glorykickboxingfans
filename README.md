@@ -21,8 +21,9 @@ for any future factual archive remain separate, unresolved adoption work.
 
 - Package `com.ivicastojanoski.glorykickboxingfans`, min API24, compile/target36.
 - AGP8.10.1 / Gradle8.14.6 / JDK21, Java8 source. Existing Support AppCompat23.1.1 retained; unused Design/FAB removed; AndroidX is test-only. No Compose or production dependency added.
-- These draft APKs retain version1/1.0 for local verification. A future update
-  needs a fresh monotonic Play version code, independent review and release gates.
+- The unsigned draft candidate uses versionCode2 / versionName1.1-prototype,
+  above the recorded internal v1. Recheck available codes immediately before any
+  authorized upload; review, signing and release gates remain separate.
 
 ```sh
 python3 scripts/validate_archive.py

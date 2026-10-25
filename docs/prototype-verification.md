@@ -1,6 +1,7 @@
 # Prototype implementation and evidence
 
-Current results and review fixes: [verification follow-up](review-follow-up.md).
+Current results and review fixes: [verification follow-up](review-follow-up.md);
+current unsigned version2: [candidate metadata](release-candidate.md).
 The original18-case milestone below is retained as historical evidence; current
 results are22 Python,25 JVM and29 device cases.
 

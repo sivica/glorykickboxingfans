@@ -13,9 +13,9 @@
   "emulator_stopped": true,
   "dedicated_adb_server_stopped": true,
   "font_scale_restored": true,
-  "unsigned_release_sha256": "218fcb77af15850f023dbb0725650228f2c51d40eb893911f3ec861930ac8f26",
-  "unsigned_release_bytes": 898936,
-  "version_code": 1,
+  "unsigned_release_sha256": "27da8b9fca3b9a599a58cc47f70319fafee129cf439b3da26f3c51158b6ee67f",
+  "unsigned_release_bytes": 898943,
+  "version_code": 2,
   "min_sdk": 24,
   "target_sdk": 36,
   "permissions": [],
@@ -26,5 +26,13 @@
   "manual_talkback": "NOT RUN",
   "api24": "NOT RUN - image not installed",
   "api29": "NOT RUN - image not installed",
-  "functional_jvm_json_loader": "NOT RUN - no functional org.json artifact cached; actual Android loader executed on API36"
+  "functional_jvm_json_loader": "NOT RUN - no functional org.json artifact cached; actual Android loader executed on API36",
+  "version_name": "1.1-prototype",
+  "candidate_config_commit": "bf692bcb74b1497971cad6f907d0d80ba09ed880",
+  "device_tested_version_code": 1,
+  "device_tested_version_name": "1.0",
+  "candidate_device_execution": "NOT RUN: unsigned version-only candidate; DEX/assets unchanged",
+  "v1_v2_release_dex_assets_identical": true,
+  "known_consumed_version_blocker_removed": true,
+  "version_not_reserved_in_play": true
 }
