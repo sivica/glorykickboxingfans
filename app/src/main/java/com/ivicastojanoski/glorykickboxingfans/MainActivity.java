@@ -1,53 +1,95 @@
 package com.ivicastojanoski.glorykickboxingfans;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SearchView;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.content.Context;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import com.ivicastojanoski.glorykickboxingfans.archive.Archive;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+/** Offline archive/search. Query, year and native ScrollView position survive recreation. */
+public final class MainActivity extends ArchiveScreen {
+    private String query = "";
+    private Integer year;
+    private SearchView search;
+    private Button yearButton;
+    private LinearLayout results;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        EdgeToEdge.apply(getWindow(), findViewById(R.id.main_content));
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+    @Override protected void onCreate(Bundle state) {
+        super.onCreate(state);
+        if (archive == null) return;
+        if (state != null) { query = state.getString("query", ""); year = state.containsKey("year") ? state.getInt("year") : null; }
+        header(getString(R.string.archive_brand), getString(R.string.archive_subtitle), false);
+        content.setFocusableInTouchMode(true);
+        search = new SearchView(this); search.setId(R.id.archive_search); search.setIconifiedByDefault(false);
+        search.setQueryHint(getString(R.string.archive_search)); search.setBackgroundResource(R.drawable.archive_card);
+        search.setPadding(dp(4), dp(4), dp(4), dp(4)); search.setMinimumHeight(dp(56)); search.setSaveEnabled(false);
+        search.findViewById(android.support.v7.appcompat.R.id.search_plate).setBackgroundColor(android.graphics.Color.TRANSPARENT);
+        android.widget.EditText input = (android.widget.EditText) search.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        input.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 16);
+        input.setTextColor(getResources().getColor(R.color.archive_ink, getTheme()));
+        input.setHintTextColor(getResources().getColor(R.color.archive_muted, getTheme()));
+        View clear = search.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        clear.setContentDescription(getString(R.string.archive_clear_query));
+        clear.setMinimumWidth(dp(48)); clear.setMinimumHeight(dp(48));
+        search.setQuery(query, false); search.clearFocus(); add(content, search, 0);
+        yearButton = action(getString(R.string.archive_all_years), this::chooseYear, false); yearButton.setId(R.id.year_filter);
+        LinearLayout filters = new LinearLayout(this); filters.setOrientation(LinearLayout.HORIZONTAL);
+        filters.setGravity(android.view.Gravity.CENTER_VERTICAL); filters.setPadding(0, dp(16), 0, dp(16));
+        filters.addView(yearButton, new LinearLayout.LayoutParams(0, -2, 0.44f));
+        TextView sort = text(getString(R.string.archive_newest), R.style.ArchiveText_Meta);
+        LinearLayout.LayoutParams sortParams = new LinearLayout.LayoutParams(0, -2, 0.56f); sortParams.setMarginStart(dp(12));
+        filters.addView(sort, sortParams); add(content, filters, 12);
+        notice(content, getString(R.string.archive_scope_title), getString(R.string.archive_scope_body), false);
+        results = new LinearLayout(this); results.setOrientation(LinearLayout.VERTICAL); results.setId(R.id.archive_results);
+        add(content, results, 0);
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override public boolean onQueryTextSubmit(String value) { hideKeyboard(); return true; }
+            @Override public boolean onQueryTextChange(String value) { query = value; renderResults(); return true; }
         });
+        renderResults();
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void chooseYear() {
+        hideKeyboard();
+        List<Integer> years = archive.years(); String[] labels = new String[years.size()+1]; labels[0] = getString(R.string.archive_all_years);
+        for (int i = 0; i < years.size(); i++) labels[i+1] = String.valueOf(years.get(i));
+        int checked = year == null ? 0 : years.indexOf(year)+1;
+        new AlertDialog.Builder(this).setTitle(R.string.archive_year_title).setSingleChoiceItems(labels, checked, (dialog, which) -> {
+            year = which == 0 ? null : years.get(which-1); renderResults(); dialog.dismiss();
+        }).setNegativeButton(R.string.archive_close, null).show();
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void renderResults() {
+        results.removeAllViews();
+        yearButton.setText(year == null ? getString(R.string.archive_all_years) : getString(R.string.archive_selected_year, year));
+        yearButton.setBackgroundResource(year == null ? R.drawable.archive_action : R.drawable.archive_selected);
+        yearButton.setSelected(year != null);
+        List<Archive.Event> events = archive.search(query, year);
+        if (events.isEmpty()) {
+            TextView empty = section(results, getString(R.string.archive_no_results)); empty.setId(R.id.empty_heading);
+            add(results, text(getString(R.string.archive_no_results_body), R.style.ArchiveText), 12);
+            Button reset = action(getString(R.string.archive_reset), this::clear, true); reset.setId(R.id.reset_filters); add(results, reset, 12);
+        } else {
+            TextView count = section(results, query.trim().isEmpty() && year == null ? getString(R.string.archive_heading)
+                    : getResources().getQuantityString(R.plurals.archive_event_count, events.size(), events.size()));
+            count.setId(R.id.result_count); count.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);
+            for (Archive.Event event : events) eventLink(results, event, getString(R.string.archive_card_eyebrow, event.date.substring(0,4)), event.title,
+                    metadata(event), getResources().getQuantityString(R.plurals.archive_bout_count, event.bouts.size(), event.bouts.size()), event.id);
+            if (!query.trim().isEmpty() || year != null) {
+                Button reset = action(getString(R.string.archive_reset), this::clear, false); reset.setId(R.id.reset_filters); add(results, reset, 12);
+            }
         }
-
-        return super.onOptionsItemSelected(item);
+        provenanceAction(results, archive.sources.stream().map(s -> s.id).collect(java.util.stream.Collectors.toList()));
+    }
+    private void clear() { year = null; query = ""; search.setQuery("", false); hideKeyboard(); renderResults(); }
+    private void hideKeyboard() {
+        search.clearFocus(); ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(search.getWindowToken(), 0);
+    }
+    @Override protected void onSaveInstanceState(Bundle out) {
+        out.putString("query", query); if (year != null) out.putInt("year", year); super.onSaveInstanceState(out);
     }
 }

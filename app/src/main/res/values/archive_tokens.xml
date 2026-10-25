@@ -1,0 +1,57 @@
+<resources>
+    <color name="archive_paper">#F4F2EB</color>
+    <color name="archive_ink">#17251F</color>
+    <color name="archive_surface">#FFFFFF</color>
+    <color name="archive_muted">#53625A</color>
+    <color name="archive_lime">#D7EE86</color>
+    <color name="archive_sage">#E6EDE3</color>
+    <color name="archive_amber">#F8E9C2</color>
+    <dimen name="archive_screen_inset">20dp</dimen>
+    <dimen name="archive_card_inset">16dp</dimen>
+    <dimen name="archive_radius">12dp</dimen>
+    <dimen name="archive_touch">48dp</dimen>
+    <style name="ArchiveText">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/archive_ink</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+    <style name="ArchiveText.Meta" parent="ArchiveText">
+        <item name="android:textColor">@color/archive_muted</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="ArchiveText.Label" parent="ArchiveText.Meta">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ArchiveText.Section" parent="ArchiveText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="ArchiveText.Title" parent="ArchiveText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/archive_paper</item>
+    </style>
+    <style name="ArchiveText.Display" parent="ArchiveText.Title">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">36sp</item>
+    </style>
+    <style name="ArchiveAction" parent="ArchiveText">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:minHeight">@dimen/archive_touch</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@drawable/archive_action</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+    <style name="AppTheme.Ringside" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/archive_ink</item>
+        <item name="colorPrimaryDark">@color/archive_ink</item>
+        <item name="colorAccent">@color/archive_ink</item>
+        <item name="android:windowBackground">@color/archive_paper</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+</resources>

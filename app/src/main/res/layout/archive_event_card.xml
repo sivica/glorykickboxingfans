@@ -1,0 +1,9 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/event_card"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
+    android:background="@drawable/archive_action" android:padding="@dimen/archive_card_inset" android:clickable="true" android:focusable="true">
+    <TextView android:id="@+id/card_eyebrow" style="@style/ArchiveText.Label" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <TextView android:id="@+id/card_title" style="@style/ArchiveText.Section" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" />
+    <TextView android:id="@+id/card_meta" style="@style/ArchiveText.Meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" />
+    <TextView android:id="@+id/card_detail" style="@style/ArchiveText" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" />
+    <TextView style="@style/ArchiveText" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="sans-serif-medium" android:text="@string/archive_view_results" />
+</LinearLayout>

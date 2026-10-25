@@ -1,0 +1,52 @@
+<resources>
+    <string name="archive_brand">RINGSIDE</string>
+    <string name="archive_subtitle">Unofficial GLORY fan archive prototype</string>
+    <string name="archive_demo_banner">DEMO DATA · FICTIONAL EVENTS &amp; FIGHTERS</string>
+    <string name="archive_back">←  Back</string>
+    <string name="archive_search">Search events</string>
+    <string name="archive_clear_query">Clear search</string>
+    <string name="archive_all_years">All years ▾</string>
+    <string name="archive_selected_year">%1$d ✓</string>
+    <string name="archive_year_title">Filter by year</string>
+    <string name="archive_newest">Newest first</string>
+    <string name="archive_scope_title">Bundled offline demo</string>
+    <string name="archive_scope_body">Fictional cards only. Available from first launch without a connection. Not affiliated with GLORY.</string>
+    <string name="archive_heading">Event archive</string>
+    <plurals name="archive_event_count"><item quantity="one">%d matching event</item><item quantity="other">%d matching events</item></plurals>
+    <plurals name="archive_bout_count"><item quantity="one">%d included bout</item><item quantity="other">%d included bouts</item></plurals>
+    <plurals name="archive_appearance_count"><item quantity="one">%d included appearance</item><item quantity="other">%d included appearances</item></plurals>
+    <string name="archive_card_eyebrow">FICTIONAL EVENT · %1$s</string>
+    <string name="archive_view_results">View results  →</string>
+    <string name="archive_meta">%1$s · %2$s</string>
+    <string name="archive_partial_card">Partial demonstration card</string>
+    <string name="archive_complete_card">Complete demonstration card</string>
+    <string name="archive_no_results">No matching events</string>
+    <string name="archive_no_results_body">Try a different title, location or fighter, or clear the year filter. This demonstration dataset does not cover real events.</string>
+    <string name="archive_reset">Clear search and year</string>
+    <string name="archive_results_heading">Bout results</string>
+    <string name="archive_bout_label">BOUT %1$02d · %2$s</string>
+    <string name="archive_bout_demo">SYNTHETIC</string>
+    <string name="archive_fighter_outcome">%1$s · %2$s</string>
+    <string name="archive_fighter_link">%1$s. %2$s. View included appearances</string>
+    <string name="archive_bout_method">%1$s · Round %2$d</string>
+    <string name="archive_method_missing">Method or round unavailable</string>
+    <string name="archive_missing_result">Result not recorded. No winner assigned.</string>
+    <string name="archive_cancelled">Cancelled bout · No result</string>
+    <string name="archive_synthetic_result">Synthetic result · Not a real bout</string>
+    <string name="archive_appearances_subtitle">Appearances in this dataset</string>
+    <string name="archive_appearances_heading">Recorded appearances</string>
+    <string name="archive_career_scope">Included events only. This is not a full professional record; no career totals are inferred.</string>
+    <string name="archive_appearance_eyebrow">FICTIONAL APPEARANCE</string>
+    <string name="archive_opponent">vs %1$s</string>
+    <string name="archive_aliases">Also listed as: %1$s</string>
+    <string name="archive_correction_title">Correction history</string>
+    <string name="archive_correction_action">Corrected name · View change</string>
+    <string name="archive_correction_format">Revision %1$d → %2$d\nPreviously: %3$s\nNow: %4$s\nReason: %5$s</string>
+    <string name="archive_provenance_action">Data, coverage and provenance</string>
+    <string name="archive_provenance_title">About this demonstration</string>
+    <string name="archive_revision">Bundled dataset · Revision %1$d</string>
+    <string name="archive_close">Close</string>
+    <string name="archive_error_title">Archive unavailable</string>
+    <string name="archive_error_body">The bundled demonstration could not be read. No results have been substituted. Reopen the app to try again.</string>
+    <string name="archive_not_found">This item is not included in the bundled dataset.</string>
+</resources>
