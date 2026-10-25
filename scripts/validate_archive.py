@@ -116,7 +116,6 @@ def validate(data):
                 require(tournament_events.setdefault(tournament['id'], event['id']) == event['id'], 'Tournament spans different events')
             bout_count += 1
         require(orders == set(range(1, len(orders)+1)), 'Bout order must be contiguous from one')
-    require(not (set(tournament_events) & seen), 'Tournament ID collides with entity')
     previous = {}
     for correction in data['corrections']:
         obj(correction, 'id from_revision to_revision target_id field previous_value new_value reason provenance')
@@ -127,8 +126,10 @@ def validate(data):
         target = targets.get(correction['target_id'])
         field = correction['field']
         require(field in ('name', 'title', 'method', 'result', 'coverage') and target is not None and field in target and target is not correction, 'Invalid correction target/field')
-        for key in ('previous_value', 'new_value', 'reason'):
-            text(correction[key])
+        text(correction['reason'])
+        for key in ('previous_value', 'new_value'):
+            if correction[key] is not None or field != 'method':
+                text(correction[key])
         provenance(correction)
         pair = (correction['target_id'], field)
         if pair in previous:
@@ -137,6 +138,7 @@ def validate(data):
         previous[pair] = correction
     for (target_id, field), correction in previous.items():
         require(targets[target_id][field] == correction['new_value'], 'Correction does not match current value')
+    require(not (set(tournament_events) & seen), 'Tournament ID collides with entity')
     return {'kind': data['kind'], 'schema_version': 1, 'revision': data['revision'], 'events': len(data['events']), 'fighters': len(fighters), 'bouts': bout_count, 'corrections': len(data['corrections'])}
 
 

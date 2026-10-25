@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /** Immutable, offline-only domain. Identifiers and coverage never depend on display names. */
@@ -139,16 +140,18 @@ public final class Archive {
         }
         Map<String, Correction> latest = new LinkedHashMap<>();
         for (Correction correction : corrections) {
-            addId(ids, correction.id); text(correction.reason); text(correction.previousValue); text(correction.newValue);
+            addId(ids, correction.id); text(correction.reason);
+            if (!"method".equals(correction.field) || correction.previousValue != null) text(correction.previousValue);
+            if (!"method".equals(correction.field) || correction.newValue != null) text(correction.newValue);
             require(correction.fromRevision > 0 && correction.fromRevision < correction.toRevision && correction.toRevision <= revision, "Invalid correction revision");
             Map<String, String> target = values.get(correction.targetId);
             require(target != null && target.containsKey(correction.field), "Invalid correction target/field");
             provenance(correction.provenance, sourceIds);
             String key = correction.targetId + "/" + correction.field;
             Correction previous = latest.put(key, correction);
-            require(previous == null || (previous.toRevision <= correction.fromRevision && previous.newValue.equals(correction.previousValue)), "Broken correction chain");
+            require(previous == null || (previous.toRevision <= correction.fromRevision && Objects.equals(previous.newValue, correction.previousValue)), "Broken correction chain");
         }
-        for (Correction correction : latest.values()) require(correction.newValue.equals(values.get(correction.targetId).get(correction.field)), "Correction/current value mismatch");
+        for (Correction correction : latest.values()) require(Objects.equals(correction.newValue, values.get(correction.targetId).get(correction.field)), "Correction/current value mismatch");
         for (String tournament : tournaments.keySet()) require(!ids.contains(tournament), "Tournament identity collision");
     }
 

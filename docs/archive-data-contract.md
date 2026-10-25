@@ -24,10 +24,12 @@ explicit local error, never a service fallback or invented replacement result.
   Unresolved/cancelled bouts have null method/round. No winner is guessed.
 - Optional tournament ID and stage (`quarterfinal`, `semifinal`, `final`, `reserve`,
   `unknown`) preserve repeated appearances in one card. Tournament IDs cannot
-  collide with entities or span events in schema v1.
+  collide with any entity, including correction IDs added later, or span events in schema v1.
 - Corrections retain ID, from/to revision, target ID/field, old/new values, reason
   and provenance. Chains must connect and their last values match the current
-  snapshot. Scalar name/title/method/result/coverage corrections are supported;
+  snapshot. Method history is nullable: unknown→KO and KO→unknown retain literal
+  JSON null values, not invented text. Other name/title/result/coverage history
+  values remain nonempty strings. Scalar corrections are supported;
   structural changes require a reviewed dataset revision/schema extension rather
   than rewriting stable identity or silently discarding history.
 
@@ -52,3 +54,16 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
 The existing unsigned Gradle checks validate compilation/JVM/lint without creating
 or using a signing key. Runtime captures and signed/protected release acceptance
 remain separate evidence. No merge, upload or release is implied by this contract.
+
+Review regressions preserve null method history in both transitions/chains and
+reject tournament IDs colliding with correction IDs after all entities are known.
+The Python gate and Java domain enforce those semantics; schema alone does not
+prove cross-reference integrity. Android reader regressions execute the actual
+platform JSON parser on-device. The standalone JVM suite tests the production
+semantic model; an additional functional org.json implementation is not cached,
+so no extra JSON library/testing stack was installed to emulate Android.
+
+The test-only JUnit pin is4.13.2. Its [official advisory](https://github.com/junit-team/junit4/security/advisories/GHSA-269g-pwp5-87pp)
+affects TemporaryFolder in older versions. Current tests do not use that API or
+write secrets, but the cached patched release removes the known test-tool issue.
+This is not a claim of a production-app exploit or a full dependency security audit.

@@ -363,12 +363,26 @@
           ]
         },
         "previous_value": {
-          "type": "string",
-          "minLength": 1
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "new_value": {
-          "type": "string",
-          "minLength": 1
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "reason": {
           "type": "string",
@@ -383,7 +397,31 @@
             "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
           }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "const": "method"
+              }
+            }
+          },
+          "then": {},
+          "else": {
+            "properties": {
+              "previous_value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "new_value": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }
