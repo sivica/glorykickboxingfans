@@ -16,9 +16,6 @@ jobs:
   unsigned-checks:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
-    env:
-      GRADLE_USER_HOME: ${{ runner.temp }}/glory-gradle
-      ANDROID_USER_HOME: ${{ runner.temp }}/glory-android
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -39,6 +36,9 @@ jobs:
           java -version
       - name: Build unsigned APK and bundle; lint and JVM tests
         shell: bash
+        env:
+          GRADLE_USER_HOME: ${{ runner.temp }}/glory-gradle
+          ANDROID_USER_HOME: ${{ runner.temp }}/glory-android
         run: |
           set -euo pipefail
           ./gradlew --no-daemon --no-build-cache --no-configuration-cache --console=plain \
