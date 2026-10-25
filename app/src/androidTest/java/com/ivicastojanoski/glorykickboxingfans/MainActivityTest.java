@@ -197,7 +197,10 @@ public class MainActivityTest {
             previous = current; SystemClock.sleep(100);
         }
         assertNotNull("Capture settles within five seconds", result);
-        File directory = context().getExternalFilesDir("archive-captures"); assertNotNull(directory);
+        File base = context().getExternalFilesDir("archive-captures"); assertNotNull(base);
+        String session = InstrumentationRegistry.getArguments().getString("captureSession", "manual");
+        assertTrue("Confined capture-session ID", session.matches("[a-z0-9-]{1,80}"));
+        File directory = new File(base, session);
         assertTrue(directory.exists() || directory.mkdirs());
         try (FileOutputStream output = new FileOutputStream(new File(directory, name+".png"))) { assertTrue(result.compress(Bitmap.CompressFormat.PNG,100,output)); }
         finally { result.recycle(); }
