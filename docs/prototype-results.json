@@ -1,0 +1,23 @@
+{
+  "source_code_commit": "d76d866d4817f204140e5f920bf14da6c630545f",
+  "main_source_tree": "715b751ceafeea96ddb3feef8f91f1bd13cf6e42",
+  "python_contract_tests": 17,
+  "jvm_tests": 19,
+  "device_tests": 18,
+  "device_environment": "API36 ARM64, 400dp portrait, 200% archive text/landscape case",
+  "airplane_mode": true,
+  "fresh_install_earlier_ui_run": true,
+  "fresh_install_final_ui_run": false,
+  "screenshots": "actual instrumented captures, not goldens",
+  "capture_session": "run-368373a1e096",
+  "emulator_stopped": true,
+  "dedicated_adb_server_stopped": true,
+  "font_scale_restored": true,
+  "unsigned_release_sha256": "1045f434ef4139a8bb12bc5509f54ac2cec238ce6ec6bf0e26f06b58248b7549",
+  "unsigned_release_bytes": 898665,
+  "version_code": 1,
+  "min_sdk": 24,
+  "target_sdk": 36,
+  "permissions": [],
+  "release_ready": false
+}
