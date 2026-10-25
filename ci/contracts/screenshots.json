@@ -1,0 +1,20 @@
+{
+  "contract_version": 1,
+  "status": "ACTUAL_CAPTURES_NO_GOLDENS",
+  "backend": "Android UiAutomation; no image baseline comparator",
+  "environment": {
+    "device": "task-owned Pixel 7 ARM64 AVD",
+    "api": 36,
+    "density": "420 dpi from AVD configuration",
+    "locale": "not independently recorded",
+    "timezone": "not independently recorded",
+    "theme": "existing AppTheme",
+    "network": "app requests no network permission; no app live service"
+  },
+  "cases": [
+    "launch-portrait",
+    "launch-landscape",
+    "fab-snackbar"
+  ],
+  "comparison": "Portrait, stable landscape and Snackbar actual captures inspected. No approved golden baseline or pixel regression comparison; large-font coverage not run."
+}

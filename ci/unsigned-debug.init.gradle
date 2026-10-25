@@ -1,0 +1,8 @@
+// Local validation only: do not use or create any signing credential.
+gradle.beforeProject { project ->
+    project.pluginManager.withPlugin('com.android.application') {
+        project.extensions.getByName('androidComponents').finalizeDsl { android ->
+            android.buildTypes.getByName('debug').signingConfig = null
+        }
+    }
+}

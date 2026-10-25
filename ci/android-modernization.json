@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "name": "glorykickboxingfans",
+  "project_dir": ".",
+  "module": ":app",
+  "jdk": "21",
+  "gradle_version": "8.14.6",
+  "distribution_sha256": "7988ed071b2a07900e2ec715fca15c6ab72bce6db433af301fa7fa7e9407bd24",
+  "wrapper_jar_sha256": "ad16bca46cb71bb5887c546860d93992aeee35c1fdaf4a242b0a612375d937e0",
+  "sdk_packages": [
+    "platforms;android-36",
+    "build-tools;35.0.0"
+  ],
+  "tasks": {
+    "lint": [
+      "lintDebug"
+    ],
+    "unit": [
+      "testDebugUnitTest"
+    ],
+    "build": [
+      "assembleDebug"
+    ]
+  },
+  "fixture_contract": "ci/contracts/ui.json",
+  "screenshot_contract": "ci/contracts/screenshots.json",
+  "release_enabled": false
+}
