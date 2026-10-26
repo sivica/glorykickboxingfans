@@ -25,7 +25,7 @@ public class DarkArenaTest {
             InstrumentationRegistry.getInstrumentation().waitForIdleSync();
             screen.onActivity(activity -> {
                 assertEquals(Color.parseColor("#F7F7F8"), ((TextView) activity.findViewById(R.id.screen_title)).getCurrentTextColor());
-                assertEquals(Color.WHITE, ((TextView) activity.findViewById(R.id.demo_banner)).getCurrentTextColor());
+                assertEquals(activity.getColor(R.color.archive_text), ((TextView) activity.findViewById(R.id.demo_banner)).getCurrentTextColor());
                 assertEquals(Color.parseColor("#B8BCC7"), ((TextView) activity.findViewById(android.support.v7.appcompat.R.id.search_src_text)).getCurrentTextColor());
                 assertEquals(Color.WHITE, ((TextView) activity.findViewById(R.id.card_footer)).getCurrentTextColor());
                 int lightBars = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
@@ -38,6 +38,7 @@ public class DarkArenaTest {
                         {R.color.archive_text, R.color.archive_background},
                         {R.color.archive_secondary, R.color.archive_surface},
                         {R.color.archive_secondary, R.color.archive_notice_surface},
+                        {R.color.archive_text, R.color.archive_notice_surface},
                         {R.color.archive_on_dark, R.color.archive_accent},
                         {R.color.archive_on_dark, R.color.archive_warning_surface}}) {
                     assertTrue("Normal text contrast >= 4.5", android.support.v4.graphics.ColorUtils.calculateContrast(

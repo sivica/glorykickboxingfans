@@ -40,6 +40,26 @@ public class ArchiveAccessibilityTest {
         finally { shell("settings put system font_scale " + (original.matches("[0-9]+(?:\\.[0-9]+)?") ? original : "1.0")); }
     }
     private interface Checked { void run() throws Exception; }
+    @Test public void demoNoticeIsInformationalOnEveryPrimaryScreen() {
+        for (Intent intent : new Intent[] {new Intent(InstrumentationRegistry.getInstrumentation().getTargetContext(), MainActivity.class), event(), fighter()}) {
+            try (ActivityScenario<ArchiveScreen> screen = ActivityScenario.launch(intent)) {
+                screen.onActivity(activity -> {
+                    TextView notice = activity.findViewById(R.id.demo_banner);
+                    assertEquals("Demo archive · Fictional results", notice.getText().toString());
+                    assertEquals(activity.getColor(R.color.archive_notice_surface), ((android.graphics.drawable.ColorDrawable) notice.getBackground()).getColor());
+                    assertEquals(activity.getColor(R.color.archive_text), notice.getCurrentTextColor());
+                    assertNotNull("Information icon accompanies the readable label", notice.getCompoundDrawablesRelative()[0]);
+                    assertFalse(notice.isClickable());
+                    assertEquals(View.ACCESSIBILITY_LIVE_REGION_NONE, notice.getAccessibilityLiveRegion());
+                    AccessibilityNodeInfo node = notice.createAccessibilityNodeInfo();
+                    assertEquals("Demo archive · Fictional results", node.getText().toString());
+                    assertNull("Informational notice has no error semantics", node.getError());
+                    assertNull("No duplicate icon announcement", node.getContentDescription());
+                    node.recycle();
+                });
+            }
+        }
+    }
     static void validateLayout(ArchiveScreen activity) {
         assertTrue(activity.getResources().getConfiguration().fontScale >= 1.9f);
         noEllipsis(activity.findViewById(R.id.main_content));
