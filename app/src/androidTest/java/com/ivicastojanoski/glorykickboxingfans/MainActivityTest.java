@@ -45,7 +45,7 @@ public class MainActivityTest {
     @Test public void archiveLaunchDisclosesDemoAndPreservesPackageWithoutPermissions() throws Exception {
         try (ActivityScenario<MainActivity> screen = ActivityScenario.launch(MainActivity.class)) {
             onView(withId(R.id.screen_title)).check(matches(withText("RINGSIDE")));
-            onView(withId(R.id.demo_banner)).check(matches(withText(containsString("FICTIONAL"))));
+            onView(withId(R.id.demo_banner)).check(matches(withText("Demo archive · Fictional results")));
             onView(withTagValue(is("demo-event-northern-2025"))).check(matches(isDisplayed()));
             PackageInfo info = context().getPackageManager().getPackageInfo(context().getPackageName(), PackageManager.GET_PERMISSIONS);
             assertEquals("com.ivicastojanoski.glorykickboxingfans", info.packageName);

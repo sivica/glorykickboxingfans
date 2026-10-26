@@ -14,10 +14,12 @@
                 <TextView android:id="@+id/screen_subtitle" style="@style/ArchiveText.Meta" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:layout_marginTop="8dp" />
             </LinearLayout>
-            <View android:layout_width="match_parent" android:layout_height="3dp" android:background="@color/archive_accent" />
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/archive_border" />
             <TextView android:id="@+id/demo_banner" style="@style/ArchiveText.Label" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:minHeight="28dp" android:background="@color/archive_accent" android:textColor="@color/archive_on_dark"
-                android:gravity="center" android:padding="4dp" android:text="@string/archive_demo_banner" />
+                android:layout_height="wrap_content" android:minHeight="48dp" android:background="@color/archive_notice_surface" android:textColor="@color/archive_text"
+                android:gravity="center_vertical" android:paddingStart="@dimen/archive_screen_inset" android:paddingEnd="@dimen/archive_screen_inset"
+                android:paddingTop="8dp" android:paddingBottom="8dp" android:drawableStart="@drawable/archive_info" android:drawablePadding="8dp"
+                android:text="@string/archive_demo_banner" />
             <LinearLayout android:id="@+id/screen_content" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:padding="@dimen/archive_screen_inset" />
         </LinearLayout>

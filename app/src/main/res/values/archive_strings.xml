@@ -1,7 +1,7 @@
 <resources>
     <string name="archive_brand">RINGSIDE</string>
     <string name="archive_subtitle">Unofficial GLORY fan archive prototype</string>
-    <string name="archive_demo_banner">FICTIONAL DEMO · NOT REAL RESULTS</string>
+    <string name="archive_demo_banner">Demo archive · Fictional results</string>
     <string name="archive_back">←  Back</string>
     <string name="archive_search">Search events</string>
     <string name="archive_clear_query">Clear search</string>
