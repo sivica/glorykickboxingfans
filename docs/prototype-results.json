@@ -34,5 +34,7 @@
   "candidate_device_execution": "NOT RUN: unsigned version-only candidate; DEX/assets unchanged",
   "v1_v2_release_dex_assets_identical": true,
   "known_consumed_version_blocker_removed": true,
-  "version_not_reserved_in_play": true
+  "version_not_reserved_in_play": true,
+  "record_scope": "Historical paper-theme milestone, superseded by dark-arena-results.json",
+  "superseded_by": "dark-arena-results.json"
 }

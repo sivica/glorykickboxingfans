@@ -7,11 +7,13 @@ SHA-256 `fe466ca5da71a6486d8641f4143f0e28060f6b0b1c4ff13394e81412b5c8276a`.
 It contains the designer's retained successful Figma results and applied edits.
 
 The implementation's direct `get_design_context` read of archive `18:455`
-returned the Figma Starter-plan quota limit. No further Figma reads, alternate
-access route or quota bypass were attempted. The owner supplied this retained
-specification as the implementation handoff. **No Dark Arena render was saved**;
-direct screenshot-to-Figma comparison and pixel-perfect parity are not claimed.
-The designer can compare the new real Android captures against retained context.
+returned the Figma Starter-plan quota limit. No connector retry or quota bypass was attempted. The owner supplied this retained
+specification as the implementation handoff. No earlier Dark Arena render was saved.
+The owner later explicitly requested ordinary browser inspection; the saved Figma
+UI opened normally, and archive/event/fighter renderings were visually inspected
+without changing the design, plan, account or permissions. This supplements the
+retained values; font/content/native-component differences remain, and no
+pixel-perfect parity or automated golden comparison is claimed.
 
 ## Translation to the existing Android stack
 

@@ -1,9 +1,10 @@
 # Prototype implementation and evidence
 
-Current results and review fixes: [verification follow-up](review-follow-up.md);
+Current Dark Arena iteration: [verification and screenshots](dark-arena-verification.md).
+Earlier review fixes: [verification follow-up](review-follow-up.md);
 current unsigned version2: [candidate metadata](release-candidate.md).
-The original18-case milestone below is retained as historical evidence; current
-results are22 Python,25 JVM and29 device cases.
+The original18-case milestone below is retained as historical paper-theme evidence.
+The later paper-theme record has22 Python,25 JVM and29 device cases.
 
 Design reference: [editable Figma frames](https://www.figma.com/design/Dnm0hwiCkUIi4lNqC9oNKg).
 Read-only design-to-code inspection used archive3:43, event3:44, fighter3:45,

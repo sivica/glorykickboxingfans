@@ -14,7 +14,10 @@ converted into a win/loss or complete career record. All demo data is bundled an
 available on a fresh airplane-mode launch; there is no network-dependent first use.
 
 See [data contract](docs/archive-data-contract.md), [schema](docs/archive-schema-v1.json)
-and [design/runtime notes](docs/prototype-verification.md). Data sources and rights
+and [current Dark Arena design/runtime notes](docs/dark-arena-verification.md).
+The [retained design specification](design/README.md) documents the quota-limited
+Figma access and system-condensed font fallback; pixel-perfect parity is not claimed.
+Data sources and rights
 for any future factual archive remain separate, unresolved adoption work.
 
 ## Existing stack and checks

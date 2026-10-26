@@ -1,10 +1,11 @@
 # Review fixes and verification follow-up
 
+Current Dark Arena iteration: [verification and screenshots](dark-arena-verification.md).
 Current unsigned version2 candidate: [metadata and checksum](release-candidate.md).
 The version1 artifact/runtime details below are preserved as the reviewed baseline;
 the consumed-version blocker is removed in the new unsigned candidate.
 
-Current app code: `a16dfa8d3dd20bbd1757bded5567525dac058776` (UI branch integrated
+Reviewed paper-theme app code: `a16dfa8d3dd20bbd1757bded5567525dac058776` (UI branch integrated
 foundation fix `522753d725ab226bb900ba65f80455441b884814`). Evidence-only changes
 following this point do not alter the tested app source. Both PRs remain drafts;
 default branch and Play are unchanged.
