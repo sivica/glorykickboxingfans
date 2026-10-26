@@ -1,41 +1,62 @@
 <resources>
-    <color name="archive_paper">#F4F2EB</color>
-    <color name="archive_ink">#17251F</color>
-    <color name="archive_surface">#FFFFFF</color>
-    <color name="archive_muted">#53625A</color>
-    <color name="archive_lime">#D7EE86</color>
-    <color name="archive_sage">#E6EDE3</color>
-    <color name="archive_amber">#F8E9C2</color>
+    <color name="archive_background">#0D0E11</color>
+    <color name="archive_text">#F7F7F8</color>
+    <color name="archive_surface">#1B1D23</color>
+    <color name="archive_secondary">#B8BCC7</color>
+    <color name="archive_accent">#C52C3A</color>
+    <color name="archive_notice_surface">#242731</color>
+    <color name="archive_warning_surface">#382021</color>
+    <color name="archive_border">#6B707E</color>
+    <color name="archive_on_dark">#FFFFFF</color>
     <dimen name="archive_screen_inset">20dp</dimen>
     <dimen name="archive_card_inset">16dp</dimen>
-    <dimen name="archive_radius">12dp</dimen>
+    <dimen name="archive_radius">6dp</dimen>
     <dimen name="archive_touch">48dp</dimen>
     <style name="ArchiveText">
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/archive_ink</item>
+        <item name="android:textColor">@color/archive_text</item>
         <item name="android:textSize">16sp</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
     </style>
     <style name="ArchiveText.Meta" parent="ArchiveText">
-        <item name="android:textColor">@color/archive_muted</item>
+        <item name="android:textColor">@color/archive_secondary</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
     </style>
     <style name="ArchiveText.Label" parent="ArchiveText.Meta">
+        <item name="android:textColor">@color/archive_text</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="ArchiveText.Section" parent="ArchiveText">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">24sp</item>
     </style>
     <style name="ArchiveText.Title" parent="ArchiveText">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">28sp</item>
-        <item name="android:textColor">@color/archive_paper</item>
+        <item name="android:textColor">@color/archive_text</item>
     </style>
     <style name="ArchiveText.Display" parent="ArchiveText.Title">
         <item name="android:fontFamily">sans-serif-condensed</item>
-        <item name="android:textSize">36sp</item>
+        <item name="android:textSize">34sp</item>
+    </style>
+    <style name="ArchiveText.CardTitle" parent="ArchiveText.Title">
+        <item name="android:textSize">26sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+    <style name="ArchiveText.BoutLabel" parent="ArchiveText.Section">
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="ArchiveText.Strong" parent="ArchiveText">
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
     <style name="ArchiveAction" parent="ArchiveText">
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -46,12 +67,29 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
     </style>
-    <style name="AppTheme.Ringside" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/archive_ink</item>
-        <item name="colorPrimaryDark">@color/archive_ink</item>
-        <item name="colorAccent">@color/archive_ink</item>
-        <item name="android:windowBackground">@color/archive_paper</item>
+    <style name="AppTheme.Ringside" parent="Theme.AppCompat.NoActionBar">
+        <item name="alertDialogTheme">@style/ArchiveDialog</item>
+        <item name="colorPrimary">@color/archive_background</item>
+        <item name="colorPrimaryDark">@color/archive_background</item>
+        <item name="colorAccent">@color/archive_on_dark</item>
+        <item name="android:colorAccent">@color/archive_on_dark</item>
+        <item name="android:colorBackground">@color/archive_background</item>
+        <item name="android:colorBackgroundFloating">@color/archive_notice_surface</item>
+        <item name="android:textColorPrimary">@color/archive_text</item>
+        <item name="android:textColorSecondary">@color/archive_secondary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@color/archive_background</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:windowActionModeOverlay">true</item>
+    </style>
+    <!-- AppCompat23 resolves a separate dialog theme; activity colors do not carry over. -->
+    <style name="ArchiveDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/archive_on_dark</item>
+        <item name="android:colorAccent">@color/archive_on_dark</item>
+        <item name="android:colorBackground">@color/archive_notice_surface</item>
+        <item name="android:windowBackground">@color/archive_notice_surface</item>
+        <item name="android:textColorPrimary">@color/archive_text</item>
+        <item name="android:textColorSecondary">@color/archive_secondary</item>
+        <item name="textColorAlertDialogListItem">@color/archive_text</item>
     </style>
 </resources>

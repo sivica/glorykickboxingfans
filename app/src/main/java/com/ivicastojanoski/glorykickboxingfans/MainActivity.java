@@ -27,20 +27,36 @@ public final class MainActivity extends ArchiveScreen {
         header(getString(R.string.archive_brand), getString(R.string.archive_subtitle), false);
         content.setFocusableInTouchMode(true);
         search = new SearchView(this); search.setId(R.id.archive_search); search.setIconifiedByDefault(false);
-        search.setQueryHint(getString(R.string.archive_search)); search.setBackgroundResource(R.drawable.archive_card);
+        search.setQueryHint(getString(R.string.archive_search)); search.setBackgroundResource(R.drawable.archive_field);
         search.setPadding(dp(4), dp(4), dp(4), dp(4)); search.setMinimumHeight(dp(56)); search.setSaveEnabled(false);
         search.findViewById(android.support.v7.appcompat.R.id.search_plate).setBackgroundColor(android.graphics.Color.TRANSPARENT);
         android.widget.EditText input = (android.widget.EditText) search.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         input.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 16);
-        input.setTextColor(getResources().getColor(R.color.archive_ink, getTheme()));
-        input.setHintTextColor(getResources().getColor(R.color.archive_muted, getTheme()));
+        // AppCompat23's abc_search_view.xml fixes this child at 36dp, clipping at 200%.
+        android.widget.LinearLayout.LayoutParams inputParams = (android.widget.LinearLayout.LayoutParams) input.getLayoutParams();
+        inputParams.height = android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+        inputParams.gravity = android.view.Gravity.CENTER_VERTICAL;
+        input.setLayoutParams(inputParams);
+        input.setTextColor(getResources().getColor(R.color.archive_secondary, getTheme()));
+        input.setHintTextColor(getResources().getColor(R.color.archive_secondary, getTheme()));
         View clear = search.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
         clear.setContentDescription(getString(R.string.archive_clear_query));
         clear.setMinimumWidth(dp(48)); clear.setMinimumHeight(dp(48));
+        for (int iconId : new int[] {android.support.v7.appcompat.R.id.search_mag_icon, android.support.v7.appcompat.R.id.search_close_btn}) {
+            ((android.widget.ImageView) search.findViewById(iconId)).setImageTintList(android.content.res.ColorStateList.valueOf(
+                    getResources().getColor(R.color.archive_text, getTheme())));
+        }
         search.setQuery(query, false); search.clearFocus(); add(content, search, 0);
+        // Legacy SearchView measures to a fixed preferred height even when fonts grow.
+        // Derive its floor from the actual scaled input metrics instead of capping text.
+        android.graphics.Paint.FontMetricsInt font = input.getPaint().getFontMetricsInt();
+        search.getLayoutParams().height = Math.max(dp(56), font.bottom - font.top
+                + input.getCompoundPaddingTop() + input.getCompoundPaddingBottom()
+                + search.getPaddingTop() + search.getPaddingBottom() + dp(16));
         yearButton = action(getString(R.string.archive_all_years), this::chooseYear, false); yearButton.setId(R.id.year_filter);
+        yearButton.setTextAppearance(R.style.ArchiveText_Label);
         LinearLayout filters = new LinearLayout(this); filters.setOrientation(LinearLayout.HORIZONTAL);
-        filters.setGravity(android.view.Gravity.CENTER_VERTICAL); filters.setPadding(0, dp(16), 0, dp(16));
+        filters.setGravity(android.view.Gravity.CENTER_VERTICAL);
         filters.addView(yearButton, new LinearLayout.LayoutParams(0, -2, 0.44f));
         TextView sort = text(getString(R.string.archive_newest), R.style.ArchiveText_Meta);
         LinearLayout.LayoutParams sortParams = new LinearLayout.LayoutParams(0, -2, 0.56f); sortParams.setMarginStart(dp(12));
@@ -66,7 +82,8 @@ public final class MainActivity extends ArchiveScreen {
     private void renderResults() {
         results.removeAllViews();
         yearButton.setText(year == null ? getString(R.string.archive_all_years) : getString(R.string.archive_selected_year, year));
-        yearButton.setBackgroundResource(year == null ? R.drawable.archive_action : R.drawable.archive_selected);
+        yearButton.setBackgroundResource(year == null ? R.drawable.archive_field : R.drawable.archive_selected);
+        yearButton.setTextColor(getResources().getColor(year == null ? R.color.archive_text : R.color.archive_on_dark, getTheme()));
         yearButton.setSelected(year != null);
         List<Archive.Event> events = archive.search(query, year);
         if (events.isEmpty()) {

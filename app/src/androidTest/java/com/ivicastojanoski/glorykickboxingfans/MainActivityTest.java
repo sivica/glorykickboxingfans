@@ -139,13 +139,17 @@ public class MainActivityTest {
         try {
             shell("settings put system font_scale 2.0");
             try (ActivityScenario<MainActivity> screen = ActivityScenario.launch(MainActivity.class)) {
+                capture("large-font-portrait");
                 screen.onActivity(activity -> {
                     assertTrue("Real isolated-device font scale", activity.getResources().getConfiguration().fontScale >= 1.9f);
-                    noEllipsis(activity.findViewById(R.id.screen_content));
+                    ArchiveAccessibilityTest.validateLayout(activity);
                 });
-                capture("large-font-portrait");
+                query("Northern");
+                screen.onActivity(ArchiveAccessibilityTest::validateLayout);
+                query("");
                 screen.onActivity(activity -> activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
                 capture("large-font-landscape-before-scroll"); // Wait for the actual rotation animation/layout to settle.
+                screen.onActivity(ArchiveAccessibilityTest::validateLayout);
                 onView(withId(R.id.provenance_action)).perform(scrollTo(), click());
                 onView(withText(R.string.archive_provenance_title)).check(matches(isDisplayed()));
                 onView(withText(R.string.archive_close)).perform(click()); capture("large-font-landscape");

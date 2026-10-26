@@ -17,25 +17,23 @@ final class EdgeToEdge {
         if (Build.VERSION.SDK_INT >= 30) {
             window.setDecorFitsSystemWindows(false);
             // onCreate can precede window attachment, when its controller is null.
-            // Apply after attachment too so the first launch has readable dark icons.
+            // Apply after attachment too so the Dark Arena surface has light icons.
             content.post(() -> {
                 WindowInsetsController controller = window.getInsetsController();
                 if (controller != null) {
                     int lightBars = WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
                             | WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
-                    controller.setSystemBarsAppearance(lightBars, lightBars);
+                    controller.setSystemBarsAppearance(0, lightBars);
                 }
             });
         } else {
             int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            if (Build.VERSION.SDK_INT >= 26) flags |= View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
             window.getDecorView().setSystemUiVisibility(flags);
         }
         if (Build.VERSION.SDK_INT < 35) {
             window.setStatusBarColor(Color.TRANSPARENT);
-            // API 24/25 have no dark navigation icons; keep their original dark navigation bar.
-            if (Build.VERSION.SDK_INT >= 26) window.setNavigationBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
         }
         InsetPadding original = new InsetPadding(content.getPaddingLeft(), content.getPaddingTop(),
                 content.getPaddingRight(), content.getPaddingBottom());

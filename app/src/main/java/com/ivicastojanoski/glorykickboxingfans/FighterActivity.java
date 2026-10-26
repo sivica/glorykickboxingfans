@@ -22,6 +22,9 @@ public final class FighterActivity extends ArchiveScreen {
                             correction.previousValue, correction.newValue, correction.reason) + "\n\n" + archive.sourceLabels(correction.provenance))
                     .setPositiveButton(R.string.archive_close, null).show(), false);
             button.setId(R.id.correction_action); add(content, button, 12);
+            button.setBackgroundResource(R.drawable.archive_warning);
+            button.setTextColor(getResources().getColor(R.color.archive_on_dark, getTheme()));
+            button.setPaintFlags(button.getPaintFlags() | android.graphics.Paint.UNDERLINE_TEXT_FLAG);
         }
         section(content, getString(R.string.archive_appearances_heading));
         for (Archive.Appearance appearance : appearances) {

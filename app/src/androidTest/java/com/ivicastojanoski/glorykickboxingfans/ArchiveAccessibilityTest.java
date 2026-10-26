@@ -40,7 +40,7 @@ public class ArchiveAccessibilityTest {
         finally { shell("settings put system font_scale " + (original.matches("[0-9]+(?:\\.[0-9]+)?") ? original : "1.0")); }
     }
     private interface Checked { void run() throws Exception; }
-    private static void validateLayout(ArchiveScreen activity) {
+    static void validateLayout(ArchiveScreen activity) {
         assertTrue(activity.getResources().getConfiguration().fontScale >= 1.9f);
         noEllipsis(activity.findViewById(R.id.main_content));
         textAndTargetsFit(activity.findViewById(R.id.main_content));
@@ -49,7 +49,9 @@ public class ArchiveAccessibilityTest {
         if (view.getVisibility() != View.VISIBLE || view.getWidth()==0 || view.getHeight()==0) return;
         if (view instanceof TextView) {
             TextView text=(TextView)view;
-            if (text.getLayout()!=null) assertTrue("Text must fit vertically: "+text.getText(),
+            if (text.getLayout()!=null) assertTrue("Text must fit vertically: "+text.getClass().getSimpleName()+" id="+text.getId()
+                    +" value="+text.getText()+" layout="+text.getLayout().getHeight()+" height="+text.getHeight()
+                    +" padding="+text.getCompoundPaddingTop()+"/"+text.getCompoundPaddingBottom(),
                     text.getLayout().getHeight() <= text.getHeight()-text.getCompoundPaddingTop()-text.getCompoundPaddingBottom()+1);
         }
         if (view instanceof Button) assertTrue("Minimum 48dp target", view.getHeight()+1 >= 48*view.getResources().getDisplayMetrics().density);

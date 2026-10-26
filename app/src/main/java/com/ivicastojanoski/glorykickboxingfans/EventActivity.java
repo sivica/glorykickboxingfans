@@ -13,6 +13,8 @@ public final class EventActivity extends ArchiveScreen {
         Archive.Event event = archive.event(getIntent().getStringExtra(ITEM_ID));
         if (event == null) { notFound(); return; }
         header(event.title, metadata(event), true);
+        android.view.View header = findViewById(R.id.archive_header);
+        header.setPadding(header.getPaddingLeft(), header.getPaddingTop(), header.getPaddingRight(), dp(16));
         notice(content, getResources().getQuantityString(R.plurals.archive_bout_count, event.bouts.size(), event.bouts.size()),
                 getString(event.coverage.equals("partial-demo-card") ? R.string.archive_partial_card : R.string.archive_complete_card)
                         + ". " + getString(R.string.archive_synthetic_result), false);
@@ -21,7 +23,7 @@ public final class EventActivity extends ArchiveScreen {
             LinearLayout card = new LinearLayout(this); card.setOrientation(LinearLayout.VERTICAL);
             card.setBackgroundResource(R.drawable.archive_card); card.setPadding(dp(16), dp(16), dp(16), dp(16)); card.setTag(bout.id);
             add(card, text(getString(R.string.archive_bout_label, bout.order, bout.tournamentStage == null
-                    ? getString(R.string.archive_bout_demo) : bout.tournamentStage.toUpperCase(Locale.ROOT)), R.style.ArchiveText_Label), 0);
+                    ? getString(R.string.archive_bout_demo) : bout.tournamentStage.toUpperCase(Locale.ROOT)), R.style.ArchiveText_BoutLabel), 0);
             String first = bout.result.equals("blue_win") ? bout.blueId : bout.redId;
             String second = first.equals(bout.redId) ? bout.blueId : bout.redId;
             for (String id : new String[] {first, second}) {
@@ -29,12 +31,16 @@ public final class EventActivity extends ArchiveScreen {
                 Button link = action(getString(R.string.archive_fighter_outcome, fighter.name, outcome),
                         () -> startActivity(new Intent(this, FighterActivity.class).putExtra(ITEM_ID, id)), outcome.equals("Win"));
                 link.setGravity(android.view.Gravity.START | android.view.Gravity.CENTER_VERTICAL);
+                link.setMinimumHeight(dp(50)); link.setMinHeight(dp(50));
+                if (!outcome.equals("Win")) link.setBackgroundResource(R.drawable.archive_field);
                 link.setTag(bout.id + "/" + id); link.setContentDescription(getString(R.string.archive_fighter_link, fighter.name, outcome));
                 add(card, link, 8);
             }
             add(card, text(boutDetail(bout), R.style.ArchiveText_Meta), 8);
-            add(card, text(getString(R.string.archive_synthetic_result), R.style.ArchiveText_Meta), 8);
-            add(content, card, 12);
+            android.widget.TextView note = text(getString(R.string.archive_synthetic_result), R.style.ArchiveText_Meta);
+            note.setMinHeight(dp(48)); note.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            add(card, note, 8);
+            add(content, card, 8);
         }
         provenanceAction(content, event.provenance);
     }

@@ -50,7 +50,6 @@ public abstract class ArchiveScreen extends AppCompatActivity {
     protected TextView text(String value, int style) {
         TextView view = new TextView(this);
         view.setTextAppearance(style); view.setText(value); view.setIncludeFontPadding(false);
-        view.setLineSpacing(4 * getResources().getDisplayMetrics().scaledDensity, 1);
         return view;
     }
     protected void add(LinearLayout parent, View view, int topDp) {
@@ -70,16 +69,18 @@ public abstract class ArchiveScreen extends AppCompatActivity {
     }
     protected Button action(String title, Runnable onClick, boolean selected) {
         Button button = new android.support.v7.widget.AppCompatButton(this);
-        button.setTextAppearance(R.style.ArchiveText); button.setAllCaps(false); button.setSingleLine(false);
+        button.setTextAppearance(R.style.ArchiveText_Strong); button.setAllCaps(false); button.setSingleLine(false);
         button.setTypeface(android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL));
         button.setStateListAnimator(null); button.setElevation(0);
         button.setText(title); button.setMinHeight(dp(48)); button.setMinimumHeight(dp(48));
         button.setPadding(dp(12), dp(12), dp(12), dp(12));
         button.setBackgroundResource(selected ? R.drawable.archive_selected : R.drawable.archive_action);
+        button.setTextColor(getResources().getColor(selected ? R.color.archive_on_dark : R.color.archive_text, getTheme()));
         button.setOnClickListener(v -> onClick.run()); return button;
     }
     protected void eventLink(LinearLayout parent, Archive.Event event, String eyebrow, String title, String metadata, String detail, String tag) {
         View card = getLayoutInflater().inflate(R.layout.archive_event_card, parent, false);
+        card.setClipToOutline(true); // API21 setter works on min24; XML attribute is newer.
         ((TextView) card.findViewById(R.id.card_eyebrow)).setText(eyebrow);
         ((TextView) card.findViewById(R.id.card_title)).setText(title);
         ((TextView) card.findViewById(R.id.card_meta)).setText(metadata);
