@@ -1,8 +1,8 @@
 {
-  "source_code_commit": "cb58592f584a6c656046616385340b7486a14794",
+  "source_code_commit": "f75b722c29aaaf2614c20c2ce389e9a617597c29",
   "main_source_tree": "a7634857a7d976e720b0bd530ab5f6337b45b571",
-  "stack_base_branch": "codex/fan-archive-ui",
-  "stack_base_commit": "802b497ecfc7d86228f0610d8279c63a053d8c48",
+  "stack_base_branch": "master",
+  "stack_base_commit": "d562c4581116614ba96d73214f3cdc89971d03ae",
   "remote_enabled": false,
   "configured_endpoint": null,
   "automatic_fetch_or_scheduler": false,
@@ -24,13 +24,21 @@
     "failures": "Existing negative-reader exact diagnostic assertions expected Bundled archive instead of the new shared Archive wording; assertions now updated, refusal retained."
   },
   "current_device_run": {
-    "session": "run-e12220c23285",
-    "result": "INTERRUPTED",
-    "full_suite_pass": false,
-    "reason": "Local emulator identity scope review; no further transport use pending authority",
+    "session": "run-5b94389d11e7",
+    "result": "PASS",
+    "test_count": 42,
+    "full_suite_pass": true,
+    "api": 36,
+    "abi": "ARM64",
+    "portrait_width_dp": 360,
+    "airplane_mode_before_install": true,
+    "fresh_app_install": false,
+    "task_app_data_cleared_before_first_launch": true,
+    "approved_preexisting_emulator_identity_metadata_unchanged": true,
+    "font_scale_after_tests": "1.0",
+    "density_override_reset": true,
     "emulator_stopped": true,
-    "owned_adb_server_stopped": true,
-    "font_density_restoration": "NOT VERIFIED after interruption"
+    "owned_adb_server_stopped": true
   },
   "active_or_live_endpoint_calls": false,
   "protocol_tests": "fake JVM connection, no real TLS/DNS/server",
@@ -47,5 +55,17 @@
   "physical_phone": "NOT RUN",
   "manual_talkback": "NOT RUN",
   "protected_play_install": "NOT RUN",
-  "release_ready": false
+  "release_ready": false,
+  "executed_source_commit_before_rebase": "cb58592f584a6c656046616385340b7486a14794",
+  "rebase_preserved_entire_app_and_test_tree": true,
+  "reviewed_ui_baseline": "802b497ecfc7d86228f0610d8279c63a053d8c48",
+  "interrupted_device_run": {
+    "session": "run-e12220c23285",
+    "result": "INTERRUPTED",
+    "full_suite_pass": false,
+    "reason": "Local emulator identity scope review; no further transport use pending authority",
+    "emulator_stopped": true,
+    "owned_adb_server_stopped": true,
+    "font_density_restoration": "NOT VERIFIED after interruption"
+  }
 }

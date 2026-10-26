@@ -1,7 +1,8 @@
 # Disabled remote JSON update mechanism
 
-This follow-on is stacked on Dark Arena PR3, base
-`802b497ecfc7d86228f0610d8279c63a053d8c48`. It prepares an app-side mechanism;
+This follow-on targets `master` after reviewed foundation PR2 and Dark Arena PR3
+merged at `d562c4581116614ba96d73214f3cdc89971d03ae`. The rebase preserves the
+entire tested app/test tree. It prepares an app-side mechanism;
 **no endpoint is configured, no automatic request/scheduler/button is installed,
 and the manifest still has no INTERNET permission**. The app continues to open its
 bundled fictional archive in airplane mode. No hosting account, deployment,
@@ -73,15 +74,21 @@ career coverage, real GLORY data rights or production readiness is assumed.
 ## Verification
 
 Local unsigned APK/AAB build, lint, device-test compilation and all51 JVM/22 Python
-cases pass. Lint remains0 errors/3 existing warnings. The first41-case API36 run
-had34 passes and7 failures on old exact reader diagnostic wording; all10 new
-repository cases passed. Those diagnostic assertions now use the shared adapter's
-generic wording and still require invalid data to be refused. The subsequent
-42-case suite (including an additional actual write-path failure test) was
-interrupted for a local emulator identity authorization review. **A full current
-42-case device pass is not claimed.** The emulator/server were stopped; font/density
-restoration after that interruption was not verified. Remaining device execution
-is pending that local test-environment gate. No credential is included in source.
+cases pass. Lint remains0 errors/3 existing warnings. The complete **42-case API36
+ARM64 device suite passes** at360dp, including all31 baseline reader/UI/accessibility
+cases and11 actual repository/AtomicFile cases. All primary screens retain200%
+portrait/landscape checks. CI compiles device tests; actual execution is local.
+
+Earlier41-case execution had34 passes/7 exact diagnostic-text assertion failures;
+those assertions were aligned with the shared adapter wording while retaining
+invalid-data refusal. One later run was interrupted for an emulator identity scope
+review. Both records remain preserved. After owner approval for existing SDK-key
+use, final run `run-5b94389d11e7` passed all42 cases. The private identity's metadata
+remained unchanged; no key values were displayed/exported. Font returned to1.0,
+density override reset, and task emulator/server stopped. Airplane mode preceded
+installation and task-only demo-data reset; this is clean-data first launch on an
+updated install, not a fresh-install claim. No phone/shared AVD or live endpoint
+was used. No credential is included in source.
 
 Unsigned candidate version2/1.1-prototype is906179bytes, SHA-256
 `71ade034cbde5baa5be126aceaa416eb29df99eaf316f4ec77ffcb4777d6538a`.
@@ -98,9 +105,12 @@ corrupt-cache fallback, interrupted writes and a real blocked write path. An
 abandoned descriptor simulates interruption before commit; an actual device power
 cut is not tested. No production-cache cleanup or live service call is used.
 
+[Final default offline archive capture](screenshots/updates/archive-default.png)
+shows the same fictional bundled screen with no invented active-update status.
+
 Exact counts/results and source/artifact provenance are in
 [archive-update-results.json](archive-update-results.json). CI compiles platform
 tests; local emulator execution is separately recorded. API24/API29, physical
 phone, manual TalkBack, protected Play install and live endpoint integration remain
-unrun. Both stacked PRs remain drafts; merge/release and network enablement are
-separate gates.
+unrun. Foundation/UI PRs are merged; this updater remains a separate draft awaiting
+independent review. Its merge/release and network enablement are separate gates.
