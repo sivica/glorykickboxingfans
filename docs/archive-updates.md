@@ -33,7 +33,8 @@ For an enabled, approved endpoint, one check reads a complete candidate with:
 -3-second connect/5-second read timeouts, a10-second cooperative transfer budget,
   stream/connection cleanup and thread-interruption checks. DNS/OS blocking is not
   guaranteed to obey that total budget; no hard end-to-end timeout is claimed.
-- The same strict UTF-8 reader, schema1/synthetic-only and semantic model used by
+- The same strict UTF-8 reader, complete single object, unique decoded keys,
+  maximum32-container nesting before Android parsing, schema1/synthetic-only and semantic model used by
   the app: global IDs, references, nullable corrections, coverage and outcomes.
   Validation completes before persistence. A different archive ID, incompatible
   schema, invalid payload, equal/stale/downgrade revision never activates.
@@ -73,25 +74,26 @@ career coverage, real GLORY data rights or production readiness is assumed.
 
 ## Verification
 
-Local unsigned APK/AAB build, lint, device-test compilation and all51 JVM/22 Python
-cases pass. Lint remains0 errors/3 existing warnings. The complete **42-case API36
+Local unsigned APK/AAB build, lint, device-test compilation and all63 JVM/30 Python
+cases pass. Lint remains0 errors/3 existing warnings. The complete **46-case API36
 ARM64 device suite passes** at360dp, including all31 baseline reader/UI/accessibility
-cases and11 actual repository/AtomicFile cases. All primary screens retain200%
+cases and15 actual repository/AtomicFile cases. All primary screens retain200%
 portrait/landscape checks. CI compiles device tests; actual execution is local.
 
 Earlier41-case execution had34 passes/7 exact diagnostic-text assertion failures;
 those assertions were aligned with the shared adapter wording while retaining
 invalid-data refusal. One later run was interrupted for an emulator identity scope
 review. Both records remain preserved. After owner approval for existing SDK-key
-use, final run `run-5b94389d11e7` passed all42 cases. The private identity's metadata
+use, run `run-5b94389d11e7` passed the earlier42 cases. After the review corrections
+below, final run `run-96884fd79255` passes all46 cases. The private identity's metadata
 remained unchanged; no key values were displayed/exported. Font returned to1.0,
 density override reset, and task emulator/server stopped. Airplane mode preceded
-installation and task-only demo-data reset; this is clean-data first launch on an
-updated install, not a fresh-install claim. No phone/shared AVD or live endpoint
+installation and task-only demo-data reset; the package was absent before installation in this final run, followed by the
+explicit demo-data reset before first launch. No phone/shared AVD or live endpoint
 was used. No credential is included in source.
 
-Unsigned candidate version2/1.1-prototype is906179bytes, SHA-256
-`71ade034cbde5baa5be126aceaa416eb29df99eaf316f4ec77ffcb4777d6538a`.
+Unsigned candidate version2/1.1-prototype is907567bytes, SHA-256
+`07e03add386f12b5ca225626b49af76b70104123622e12b2c92d63a156597fbb`.
 Cached official bundletool/package audit passes with min24/target36, no permissions,
 only launcher exported and no test/private markers. The bundle stays private and
 unsigned; it is not a release or a reservation of version2 in Play.
@@ -101,7 +103,9 @@ they do not claim a real TLS, DNS, JSON-loader or server test. Platform cases us
 the actual Android JSON reader/AtomicFile and synthetic revisions generated from
 the bundled fixture, in isolated test files. They cover persistence/recreation,
 stale/downgrade/identity refusal, bad schema/JSON/UTF-8/global IDs, byte limits,
-corrupt-cache fallback, interrupted writes and a real blocked write path. An
+corrupt-cache fallback, interrupted writes and failure injection at public
+`AtomicFile.startWrite`/`finishWrite` boundaries. Actual platform file read,
+persistence and `failWrite` rollback are retained. An
 abandoned descriptor simulates interruption before commit; an actual device power
 cut is not tested. No production-cache cleanup or live service call is used.
 
@@ -109,8 +113,29 @@ cut is not tested. No production-cache cleanup or live service call is used.
 shows the same fictional bundled screen with no invented active-update status.
 
 Exact counts/results and source/artifact provenance are in
-[archive-update-results.json](archive-update-results.json). CI compiles platform
-tests; local emulator execution is separately recorded. API24/API29, physical
+[archive-update-results.json](archive-update-results.json). CI uses the pull request synthetic merge, rather than installing its artifact.
+The PR records the exact head/base/checkout commit and whether the merge tree
+matches the tested source. CI runs Python/JVM and compiles platform tests only;
+local signed-debug instrumentation is separately recorded from the exact app/test
+source. A successful CI compilation is never reported as device execution. API24/API29, physical
 phone, manual TalkBack, protected Play install and live endpoint integration remain
 unrun. Foundation/UI PRs are merged; this updater remains a separate draft awaiting
 independent review. Its merge/release and network enablement are separate gates.
+
+## Independent review corrections
+
+- The old failure test obstructed a `.new` file, coupling it to API36 implementation
+  details; API24/API29 use a backup scheme. Tests now inject failures through the
+  public AtomicFile operations, with actual file persistence, pending-write recovery
+  and rollback still exercised. No SDK-version filename branch is needed. API24/29
+  runtime execution is still unrun; source/API compatibility is not a device pass.
+- A focused pre-fix API36 regression reproduced acceptance/activation of valid JSON
+  followed by junk (`run-78fca47a3434`, one expected failure). A small syntax-only
+  gate now validates the whole object and unique decoded keys before JSONObject
+  interprets it. Comments, single quotes, trailing content, bad escapes/numbers,
+  duplicate escaped keys and invalid Unicode fail closed. The model still performs
+  all archive semantics; there is no new JSON-library dependency or updater framework.
+- The32-container limit is checked during bounded descent before recursive Android
+  parsing, including unknown fields. Actual reader/download/cache regressions use
+  a4096-level payload below1MiB and verify rejection/fallback, not a caught stack
+  overflow. CLI loading enforces the same new UTF-8/byte/depth/unique-key rules.
