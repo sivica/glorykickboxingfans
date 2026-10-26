@@ -1,0 +1,427 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Synthetic fan archive schema v1",
+  "description": "Structural validation only; validate_archive.py and Archive also enforce reference, outcome and correction semantics.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "revision",
+    "kind",
+    "title",
+    "notice",
+    "coverage",
+    "sources",
+    "fighters",
+    "events",
+    "corrections"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "type": "integer"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "kind": {
+      "const": "synthetic-demo"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notice": {
+      "type": "string",
+      "minLength": 1
+    },
+    "coverage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      },
+      "minItems": 1
+    },
+    "fighters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fighter"
+      },
+      "minItems": 1
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      },
+      "minItems": 1
+    },
+    "corrections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/correction"
+      },
+      "minItems": 0
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "kind": {
+          "const": "synthetic"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "fighter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "aliases",
+        "provenance"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          }
+        }
+      }
+    },
+    "tournament": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "stage"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "quarterfinal",
+            "semifinal",
+            "final",
+            "reserve",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "bout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "order",
+        "red_id",
+        "blue_id",
+        "status",
+        "result",
+        "method",
+        "round",
+        "tournament",
+        "provenance"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "red_id": {
+          "type": "string",
+          "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "blue_id": {
+          "type": "string",
+          "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "red_win",
+            "blue_win",
+            "draw",
+            "no_contest",
+            "unknown",
+            "not_applicable"
+          ]
+        },
+        "method": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "round": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tournament": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/tournament"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          }
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "date",
+        "venue",
+        "location",
+        "aliases",
+        "coverage",
+        "provenance",
+        "bouts"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "format": "date"
+        },
+        "venue": {
+          "type": "string",
+          "minLength": 1
+        },
+        "location": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "coverage": {
+          "type": "string",
+          "enum": [
+            "complete-demo-card",
+            "partial-demo-card"
+          ]
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          }
+        },
+        "bouts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/bout"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "from_revision",
+        "to_revision",
+        "target_id",
+        "field",
+        "previous_value",
+        "new_value",
+        "reason",
+        "provenance"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "from_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "to_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "target_id": {
+          "type": "string",
+          "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "field": {
+          "type": "string",
+          "enum": [
+            "name",
+            "title",
+            "method",
+            "result",
+            "coverage"
+          ]
+        },
+        "previous_value": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "new_value": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^demo-[a-z0-9]+(?:-[a-z0-9]+)*$"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "const": "method"
+              }
+            }
+          },
+          "then": {},
+          "else": {
+            "properties": {
+              "previous_value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "new_value": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
