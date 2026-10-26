@@ -10,9 +10,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.ivicastojanoski.glorykickboxingfans.archive.Archive;
-import com.ivicastojanoski.glorykickboxingfans.archive.ArchiveReader;
+import com.ivicastojanoski.glorykickboxingfans.archive.ArchiveRepository;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -23,13 +22,17 @@ public abstract class ArchiveScreen extends AppCompatActivity {
     static final String ITEM_ID = "archive_item_id";
     protected Archive archive;
     protected LinearLayout content;
+    protected boolean cachedArchive;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.archive_screen);
         EdgeToEdge.apply(getWindow(), findViewById(R.id.main_content));
         content = (LinearLayout) findViewById(R.id.screen_content);
-        try (InputStream input = getAssets().open("archive-demo-v1.json")) { archive = ArchiveReader.read(input); }
+        try {
+            ArchiveRepository.Snapshot snapshot = ArchiveRepository.get(this).load();
+            archive = snapshot.archive; cachedArchive = snapshot.cached;
+        }
         catch (IOException exception) {
             header(getString(R.string.archive_error_title), getString(R.string.archive_subtitle), !(this instanceof MainActivity));
             notice(content, getString(R.string.archive_error_title), getString(R.string.archive_error_body), false);
@@ -110,7 +113,7 @@ public abstract class ArchiveScreen extends AppCompatActivity {
     protected void provenanceAction(LinearLayout parent, List<String> sources) {
         Button button = action(getString(R.string.archive_provenance_action), () -> new AlertDialog.Builder(this)
                 .setTitle(R.string.archive_provenance_title)
-                .setMessage(archive.notice + "\n\n" + archive.coverage + "\n\n" + archive.sourceLabels(sources) + "\n\n" + getString(R.string.archive_revision, archive.revision))
+                .setMessage(archive.notice + "\n\n" + archive.coverage + "\n\n" + archive.sourceLabels(sources) + "\n\n" + getString(cachedArchive ? R.string.archive_saved_revision : R.string.archive_revision, archive.revision))
                 .setPositiveButton(R.string.archive_close, null).show(), false);
         button.setId(R.id.provenance_action); add(parent, button, 12);
     }
