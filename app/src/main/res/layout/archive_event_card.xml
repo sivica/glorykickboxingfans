@@ -1,0 +1,14 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/event_card"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
+    android:background="@drawable/archive_card_action" android:clickable="true" android:focusable="true">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
+        android:padding="@dimen/archive_card_inset">
+        <TextView android:id="@+id/card_eyebrow" style="@style/ArchiveText.Label" android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <TextView android:id="@+id/card_title" style="@style/ArchiveText.CardTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" />
+        <TextView android:id="@+id/card_meta" style="@style/ArchiveText.Meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" />
+        <TextView android:id="@+id/card_detail" style="@style/ArchiveText" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" />
+    </LinearLayout>
+    <TextView android:id="@+id/card_footer" style="@style/ArchiveText.Strong" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:minHeight="48dp" android:padding="12dp" android:gravity="center_vertical"
+        android:background="@color/archive_accent" android:textColor="@color/archive_on_dark" android:text="@string/archive_view_results" />
+</LinearLayout>

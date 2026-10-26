@@ -1,0 +1,5 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:padding="@dimen/archive_card_inset" android:background="@drawable/archive_notice">
+    <TextView android:id="@+id/notice_title" style="@style/ArchiveText.Label" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/archive_text" />
+    <TextView android:id="@+id/notice_body" style="@style/ArchiveText.Meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" />
+</LinearLayout>

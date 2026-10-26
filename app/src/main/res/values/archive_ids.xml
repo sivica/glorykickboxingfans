@@ -1,0 +1,10 @@
+<resources>
+    <item name="archive_search" type="id" />
+    <item name="year_filter" type="id" />
+    <item name="archive_results" type="id" />
+    <item name="result_count" type="id" />
+    <item name="empty_heading" type="id" />
+    <item name="reset_filters" type="id" />
+    <item name="provenance_action" type="id" />
+    <item name="correction_action" type="id" />
+</resources>

@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/archive_warning_surface" />
+    <corners android:radius="@dimen/archive_radius" />
+</shape>

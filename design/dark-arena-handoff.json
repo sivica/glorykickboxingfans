@@ -1,0 +1,338 @@
+{
+  "provenance": {
+    "kind": "retained Figma tool results and applied design edits",
+    "fileKey": "Dnm0hwiCkUIi4lNqC9oNKg",
+    "pageId": "18:454",
+    "noNewFigmaCalls": true,
+    "asOf": "2026-10-26",
+    "screenRendersPersistedLocally": false,
+    "prototype": "static editable design specimens; reactions audit returned []"
+  },
+  "tokens": {
+    "collection": "Arena / Semantic",
+    "collectionId": "VariableCollectionId:19:240",
+    "mode": "Dark",
+    "colors": {
+      "background": "#0D0E11",
+      "surface": "#1B1D23",
+      "text": "#F7F7F8",
+      "secondary": "#B8BCC7",
+      "border": "#6B707E",
+      "accent": "#C52C3A",
+      "notice": "#242731",
+      "warning": "#382021",
+      "warningText": "#FFB4A9",
+      "onDark": "#FFFFFF",
+      "dark": "#0D0E11"
+    },
+    "radius": 6,
+    "sharedSpacing": [
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      32,
+      48,
+      56
+    ]
+  },
+  "typography": {
+    "display": {
+      "family": "Barlow Condensed",
+      "style": "Bold",
+      "size": 34,
+      "lineHeight": 40
+    },
+    "screenTitle": {
+      "family": "Barlow Condensed",
+      "style": "Bold",
+      "size": 28,
+      "lineHeight": 34
+    },
+    "cardTitle": {
+      "family": "Barlow Condensed",
+      "style": "Bold",
+      "size": 26,
+      "lineHeight": 30
+    },
+    "section": {
+      "family": "Barlow Condensed",
+      "style": "Bold",
+      "size": 24,
+      "lineHeight": 28
+    },
+    "boutLabel": {
+      "family": "Barlow Condensed",
+      "style": "Bold",
+      "size": 18,
+      "lineHeight": 22
+    },
+    "body": {
+      "family": "Roboto",
+      "style": "Regular",
+      "size": 16,
+      "lineHeight": 24
+    },
+    "bodyStrong": {
+      "family": "Roboto",
+      "style": "Medium",
+      "size": 16,
+      "lineHeight": 24
+    },
+    "meta": {
+      "family": "Roboto",
+      "style": "Regular",
+      "size": 14,
+      "lineHeight": 20
+    },
+    "label": {
+      "family": "Roboto",
+      "style": "Bold",
+      "size": 14,
+      "lineHeight": 20
+    },
+    "headingLetterSpacingPercent": 1,
+    "headingLetterSpacingRoles": [
+      "display",
+      "screenTitle",
+      "cardTitle",
+      "section"
+    ]
+  },
+  "layout": {
+    "phone": {
+      "width": 390,
+      "height": 844,
+      "layout": "vertical",
+      "padding": 0,
+      "gap": 0,
+      "clip": true,
+      "overflow": "vertical"
+    },
+    "header": {
+      "padding": 20,
+      "gap": 8,
+      "background": "background",
+      "bottomStroke": 3,
+      "bottomStrokeColor": "accent",
+      "archiveHeight": 111,
+      "eventBottomPadding": 16,
+      "fighterHeight": 161,
+      "sizing": "Auto-layout content height; event header bottom padding was changed to 16, rather than fixed-height resizing."
+    },
+    "demoBanner": {
+      "height": 28,
+      "padding": 4,
+      "background": "accent",
+      "label": "FICTIONAL DEMO · NOT REAL RESULTS",
+      "labelStyle": "label",
+      "alignment": "center"
+    },
+    "content": {
+      "padding": 20,
+      "gap": 12,
+      "eventGap": 8
+    },
+    "largeText": {
+      "frameId": "18:755",
+      "width": 360,
+      "height": 1607,
+      "scale": 2,
+      "clip": false,
+      "overflow": "vertical",
+      "fontSizes": {
+        "back": 32,
+        "title": 56,
+        "subtitle": 28,
+        "banner": 28,
+        "noticeTitle": 28,
+        "noticeBody": 28,
+        "section": 48,
+        "boutLabel": 36,
+        "fighter": 32,
+        "result": 28,
+        "note": 28
+      }
+    }
+  },
+  "components": {
+    "primary": {
+      "id": "18:710",
+      "masterWidth": 318,
+      "height": 48,
+      "padding": 12,
+      "gap": 8,
+      "radius": 6,
+      "background": "accent",
+      "label": "onDark",
+      "textStyle": "bodyStrong"
+    },
+    "secondary": {
+      "id": "18:712",
+      "masterWidth": 318,
+      "height": 48,
+      "padding": 12,
+      "gap": 8,
+      "radius": 6,
+      "background": "notice",
+      "borderWidth": 1,
+      "border": "border",
+      "textStyle": "bodyStrong"
+    },
+    "chip": {
+      "id": "18:714",
+      "width": 145,
+      "height": 48,
+      "padding": 12,
+      "radius": 6,
+      "background": "surface",
+      "borderWidth": 1,
+      "border": "border",
+      "textStyle": "label"
+    },
+    "chipSelected": {
+      "id": "18:716",
+      "width": 145,
+      "height": 48,
+      "padding": 12,
+      "radius": 6,
+      "background": "accent",
+      "label": "onDark",
+      "textStyle": "label"
+    },
+    "search": {
+      "id": "18:718",
+      "masterWidth": 318,
+      "screenWidth": 350,
+      "height": 56,
+      "padding": 12,
+      "gap": 12,
+      "radius": 6,
+      "background": "surface",
+      "borderWidth": 1,
+      "border": "border",
+      "iconFrame": 24,
+      "iconVector": 18,
+      "iconColor": "text",
+      "queryStyle": "body",
+      "queryColor": "secondary"
+    },
+    "eventCard": {
+      "id": "18:723",
+      "width": 350,
+      "height": 198,
+      "radius": 6,
+      "background": "surface",
+      "outerPadding": 0,
+      "outerGap": 0,
+      "body": {
+        "padding": 16,
+        "gap": 8
+      },
+      "footer": {
+        "height": 48,
+        "padding": 12,
+        "gap": 8,
+        "background": "accent",
+        "labelColor": "onDark",
+        "textStyle": "bodyStrong"
+      },
+      "eyebrowStyle": "label",
+      "titleStyle": "cardTitle",
+      "metadataStyle": "meta",
+      "detailStyle": "body"
+    },
+    "notice": {
+      "id": "18:729",
+      "width": 350,
+      "padding": 16,
+      "gap": 4,
+      "radius": 6,
+      "background": "notice",
+      "oneLineBodyHeight": 76,
+      "twoLineBodyHeight": 96,
+      "titleStyle": "label",
+      "bodyStyle": "meta",
+      "bodyColor": "secondary",
+      "correctionOverrideBackground": "warning"
+    },
+    "bout": {
+      "id": "18:734",
+      "width": 350,
+      "padding": 16,
+      "gap": 8,
+      "radius": 6,
+      "background": "surface",
+      "labelStyle": "boutLabel",
+      "fighterTarget": {
+        "width": 318,
+        "height": 50,
+        "padding": 12,
+        "gap": 4,
+        "radius": 6,
+        "borderWidth": 1,
+        "border": "border",
+        "winnerBackground": "accent",
+        "otherBackground": "surface",
+        "textStyle": "bodyStrong"
+      },
+      "resultStyle": "meta",
+      "note": {
+        "style": "meta",
+        "minHeight": 48,
+        "verticalAlign": "center",
+        "correctionDecoration": "underline",
+        "correctionColor": "onDark"
+      },
+      "unknownState": "Both fighter targets surface; no WIN label or winner assigned"
+    }
+  },
+  "frameIds": {
+    "archive": "18:455",
+    "event": "18:486",
+    "fighter": "18:515",
+    "search": "18:541",
+    "empty": "18:568",
+    "offlineCached": "18:590",
+    "offlineFirstUse": "18:618",
+    "correction": "18:633",
+    "unknown": "18:659",
+    "yearFilter": "18:682",
+    "foundations": "18:704",
+    "largeText": "18:755"
+  },
+  "qa": {
+    "screenSpecimens": 11,
+    "localComponents": 8,
+    "textOverflows": 0,
+    "targetChecks": 52,
+    "undersizedTargets": 0,
+    "imageFillCount": 0,
+    "contrast": {
+      "whiteOnAccent": 5.53,
+      "primaryOnBackground": 18.03,
+      "secondaryOnSurface": 8.87
+    },
+    "allScreensVisuallyInspected": true
+  },
+  "boundaries": [
+    "RINGSIDE is a provisional uncleared working title",
+    "Unofficial GLORY-history product; no GLORY or Fight Nation affiliation",
+    "Fictional demonstration events, fighters and results only",
+    "No copied brand assets, fighter photos, streams, replays, paywalls or account gates",
+    "Preserve search/year, corrections/unknowns, partial appearances and offline-first data behavior"
+  ],
+  "localArtifacts": {
+    "completedDesignLedger": "/tmp/fightnation-design-completion.json",
+    "cloningLedger": "/tmp/design-system-state-fightnation-20261026.json",
+    "referenceImages": [
+      "/tmp/fightnation-1.png",
+      "/tmp/fightnation-2.png",
+      "/tmp/fightnation-3.png"
+    ],
+    "referenceImageWarning": "These are JPEG files with .png names from Fight Nation listing, not Dark Arena output; each 1080x2341.",
+    "/tmp/archive-before.png": "HTML error response, NOT an image"
+  }
+}
