@@ -1,5 +1,8 @@
 # Unsigned fictional prototype candidate — Dark Arena
 
+This is the UI-base candidate record at802b497. The separate disabled-update
+branch has its own [artifact and verification record](archive-updates.md).
+
 Tested app-source commit: `9e6d85c8cf747151eeb906726088640781f910a7`.
 Main-source tree: `56a30a18d8450c1a9458593b04ef6e846dca7c55`.
 Package `com.ivicastojanoski.glorykickboxingfans`, min24/target36 and
