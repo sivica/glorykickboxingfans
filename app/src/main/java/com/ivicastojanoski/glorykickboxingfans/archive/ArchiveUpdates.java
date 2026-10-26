@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 
 /** One explicit update attempt. No scheduler, network side effect when disabled, or UI status fiction. */
 public final class ArchiveUpdates {
-    public static final int MAX_BYTES = 1024 * 1024;
+    public static final int MAX_BYTES = ArchiveReader.MAX_JSON_BYTES;
     public static final int CONNECT_TIMEOUT_MS = 3000, READ_TIMEOUT_MS = 5000;
     public static final long TRANSFER_BUDGET_MS = 10000;
     public enum Outcome { DISABLED, ACTIVATED, STALE, REJECTED, UNAVAILABLE, CANCELLED }

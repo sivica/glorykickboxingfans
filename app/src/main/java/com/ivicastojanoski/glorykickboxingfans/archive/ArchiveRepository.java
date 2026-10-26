@@ -31,7 +31,9 @@ public final class ArchiveRepository implements ArchiveUpdates.Store {
     private final Bundled bundled;
     private final AtomicFile cache;
     // Explicit file/bundle injection permits deterministic platform persistence tests, without network.
-    public ArchiveRepository(Bundled bundled, File cacheFile) { this.bundled = bundled; this.cache = new AtomicFile(cacheFile); }
+    public ArchiveRepository(Bundled bundled, File cacheFile) { this(bundled, new AtomicFile(cacheFile)); }
+    // Package-only platform-test seam: failures target public operations, never SDK-specific filenames.
+    ArchiveRepository(Bundled bundled, AtomicFile cache) { this.bundled = bundled; this.cache = cache; }
 
     public synchronized Snapshot load() throws IOException {
         Archive baseline;
