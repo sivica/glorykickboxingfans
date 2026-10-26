@@ -1,0 +1,106 @@
+# Disabled remote JSON update mechanism
+
+This follow-on is stacked on Dark Arena PR3, base
+`802b497ecfc7d86228f0610d8279c63a053d8c48`. It prepares an app-side mechanism;
+**no endpoint is configured, no automatic request/scheduler/button is installed,
+and the manifest still has no INTERNET permission**. The app continues to open its
+bundled fictional archive in airplane mode. No hosting account, deployment,
+credential, signing-key change, factual dataset or Play action is included.
+
+## Actual behavior
+
+`ArchiveRepository.get(context).load()` reads the bundled baseline and prefers a
+fully valid saved archive only when its dataset ID matches and revision is newer.
+Missing, malformed, incompatible or stale saved data falls back to the bundle.
+The fixed cache path is inside private no-backup app storage; payload fields never
+become filesystem paths. Source labels say bundled/saved based on the snapshot
+actually loaded. There is no invented connected/updating/success indicator.
+
+The explicit worker-thread integration hook `checkForUpdates()` currently returns
+`DISABLED` before touching transport or store. Its default `Config.disabled()` is
+in `ArchiveRepository`; the endpoint factory's name is not an approval mechanism.
+Enabling requires a separate reviewed configuration and Internet-permission change,
+plus a deliberate calling/scheduling/UI policy. No background updater is active.
+
+For an enabled, approved endpoint, one check reads a complete candidate with:
+
+- HTTPS on443, no URL credentials/query/fragment, no redirects, no authentication
+  or cookie store installed, normal platform TLS trust/hostname checks.
+- HTTP200 and `application/json`, UTF-8, identity encoding; oversized declared
+  lengths and compressed responses are refused. Reads also enforce1MiB without
+  trusting the Content-Length header.
+-3-second connect/5-second read timeouts, a10-second cooperative transfer budget,
+  stream/connection cleanup and thread-interruption checks. DNS/OS blocking is not
+  guaranteed to obey that total budget; no hard end-to-end timeout is claimed.
+- The same strict UTF-8 reader, schema1/synthetic-only and semantic model used by
+  the app: global IDs, references, nullable corrections, coverage and outcomes.
+  Validation completes before persistence. A different archive ID, incompatible
+  schema, invalid payload, equal/stale/downgrade revision never activates.
+
+The single-process repository serializes reads/writes and repeats validation plus
+the revision check inside its write lock, so a newer concurrent commit wins. It
+copies caller bytes, writes through Android `AtomicFile`, syncs, calls finish/fail
+as appropriate, and reads committed bytes back before reporting `ACTIVATED`.
+Rejected/download-failed candidates leave the existing valid cache available.
+Interrupted pending writes recover the previously committed file; storage damage
+to an already committed cache falls back to bundled data. This is not a promise
+against hardware failure or a tamper-resistant revision ledger.
+Late cancellation or a readback error can occur after a valid atomic commit; callers
+must reload the current revision before retrying. Monotonic activation prevents a
+duplicate revision from replacing it. Production uses
+one repository singleton; multi-process writers are unsupported. Official API
+constraints: [AtomicFile](https://developer.android.com/reference/android/util/AtomicFile),
+[HttpURLConnection](https://developer.android.com/reference/java/net/HttpURLConnection).
+
+Screens hold immutable snapshots until recreated. Successfully saving data does
+not silently rebuild an open screen or manufacture an active-update status.
+
+## Security/product limits before enabling
+
+TLS delivery and a higher revision do not prove sporting facts, redistribution
+rights, correction-history continuity or publisher integrity. There is no signed
+payload protocol or pinning. The approved host must be a trusted curator and direct
+JSON URL; DNS/private-network destination policy, hosting/operational controls,
+rollback/recovery policy and any future signing mechanism need their own review.
+Requests would expose ordinary IP/TLS/HTTP metadata to that host; privacy/dataflow
+and relevant Play declarations must be reviewed before network enablement.
+
+The1MiB wire bound is not a UI performance guarantee. Current native screens build
+their small pilot lists eagerly. A real archive needs a profiled record budget or
+pagination/RecyclerView work before approval to enable a larger feed. No full
+career coverage, real GLORY data rights or production readiness is assumed.
+
+## Verification
+
+Local unsigned APK/AAB build, lint, device-test compilation and all51 JVM/22 Python
+cases pass. Lint remains0 errors/3 existing warnings. The first41-case API36 run
+had34 passes and7 failures on old exact reader diagnostic wording; all10 new
+repository cases passed. Those diagnostic assertions now use the shared adapter's
+generic wording and still require invalid data to be refused. The subsequent
+42-case suite (including an additional actual write-path failure test) was
+interrupted for a local emulator identity authorization review. **A full current
+42-case device pass is not claimed.** The emulator/server were stopped; font/density
+restoration after that interruption was not verified. Remaining device execution
+is pending that local test-environment gate. No credential is included in source.
+
+Unsigned candidate version2/1.1-prototype is906179bytes, SHA-256
+`71ade034cbde5baa5be126aceaa416eb29df99eaf316f4ec77ffcb4777d6538a`.
+Cached official bundletool/package audit passes with min24/target36, no permissions,
+only launcher exported and no test/private markers. The bundle stays private and
+unsigned; it is not a release or a reservation of version2 in Play.
+
+JVM tests use fake transport/connection/clock/store and small semantic fixtures;
+they do not claim a real TLS, DNS, JSON-loader or server test. Platform cases use
+the actual Android JSON reader/AtomicFile and synthetic revisions generated from
+the bundled fixture, in isolated test files. They cover persistence/recreation,
+stale/downgrade/identity refusal, bad schema/JSON/UTF-8/global IDs, byte limits,
+corrupt-cache fallback, interrupted writes and a real blocked write path. An
+abandoned descriptor simulates interruption before commit; an actual device power
+cut is not tested. No production-cache cleanup or live service call is used.
+
+Exact counts/results and source/artifact provenance are in
+[archive-update-results.json](archive-update-results.json). CI compiles platform
+tests; local emulator execution is separately recorded. API24/API29, physical
+phone, manual TalkBack, protected Play install and live endpoint integration remain
+unrun. Both stacked PRs remain drafts; merge/release and network enablement are
+separate gates.
