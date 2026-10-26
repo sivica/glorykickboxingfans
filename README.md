@@ -20,6 +20,10 @@ Figma access and system-condensed font fallback; pixel-perfect parity is not cla
 Data sources and rights
 for any future factual archive remain separate, unresolved adoption work.
 
+The separate [remote JSON mechanism](docs/archive-updates.md) is
+**disabled and unconfigured**. Bundled first use and validated saved-data fallback
+work locally; no network request, hosting service or active-update claim is added.
+
 ## Existing stack and checks
 
 - Package `com.ivicastojanoski.glorykickboxingfans`, min API24, compile/target36.

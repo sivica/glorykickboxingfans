@@ -83,7 +83,7 @@ public class ArchiveReaderTest {
             ArchiveReader.read(new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8)));
             fail("Invalid data must be refused");
         } catch (IOException expected) {
-            assertEquals("Bundled archive is invalid", expected.getMessage());
+            assertEquals("Archive is invalid", expected.getMessage());
         }
     }
 }

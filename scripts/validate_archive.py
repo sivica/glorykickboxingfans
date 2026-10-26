@@ -8,11 +8,61 @@ import re
 
 DEFAULT = Path(__file__).resolve().parents[1] / 'app/src/main/assets/archive-demo-v1.json'
 ID = re.compile(r'demo-[a-z0-9]+(?:-[a-z0-9]+)*\Z')
+MAX_JSON_BYTES = 1024 * 1024
+MAX_JSON_DEPTH = 32
 
 
 def require(ok, message):
     if not ok:
         raise ValueError(message)
+
+
+def parse_document(payload):
+    """Match the runtime wire gate before the semantic model; do not recurse on unbounded input."""
+    require(type(payload) is bytes and len(payload) <= MAX_JSON_BYTES, 'Archive exceeds size limit')
+    raw = payload.decode('utf-8', errors='strict')
+    depth, quoted, escaped = 0, False, False
+    for char in raw:
+        if quoted:
+            if escaped:
+                escaped = False
+            elif char == '\\':
+                escaped = True
+            elif char == '"':
+                quoted = False
+        elif char == '"':
+            quoted = True
+        elif char in '{[':
+            depth += 1
+            require(depth <= MAX_JSON_DEPTH, 'JSON nesting limit exceeded')
+        elif char in '}]':
+            depth -= 1
+
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            require(key not in result, 'Duplicate JSON key')
+            result[key] = value
+        return result
+
+    def constant(_):
+        raise ValueError('Nonstandard JSON number')
+
+    data = json.loads(raw, object_pairs_hook=unique, parse_constant=constant)
+    require(type(data) is dict, 'Archive object required')
+
+    def unicode_values(value):
+        if isinstance(value, str):
+            value.encode('utf-8', errors='strict')
+        elif isinstance(value, dict):
+            for key, child in value.items():
+                unicode_values(key)
+                unicode_values(child)
+        elif isinstance(value, list):
+            for child in value:
+                unicode_values(child)
+    unicode_values(data)  # Depth has already been bounded above, before json.loads.
+    return data
 
 
 def obj(value, fields):
@@ -147,7 +197,8 @@ def main():
     parser.add_argument('--file', type=Path, default=DEFAULT)
     args = parser.parse_args()
     try:
-        result = validate(json.loads(args.file.read_text(encoding='utf-8')))
+        with args.file.open('rb') as source:
+            result = validate(parse_document(source.read(MAX_JSON_BYTES + 1)))
     except (ValueError, OSError, TypeError, KeyError) as error:
         print(json.dumps({'status': 'INVALID', 'reason': str(error) if isinstance(error, ValueError) else 'Malformed or unreadable archive'}))
         return 1

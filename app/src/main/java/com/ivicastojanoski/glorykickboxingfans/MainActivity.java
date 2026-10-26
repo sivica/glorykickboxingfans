@@ -61,7 +61,8 @@ public final class MainActivity extends ArchiveScreen {
         TextView sort = text(getString(R.string.archive_newest), R.style.ArchiveText_Meta);
         LinearLayout.LayoutParams sortParams = new LinearLayout.LayoutParams(0, -2, 0.56f); sortParams.setMarginStart(dp(12));
         filters.addView(sort, sortParams); add(content, filters, 12);
-        notice(content, getString(R.string.archive_scope_title), getString(R.string.archive_scope_body), false);
+        notice(content, getString(cachedArchive ? R.string.archive_saved_title : R.string.archive_scope_title),
+                getString(cachedArchive ? R.string.archive_saved_body : R.string.archive_scope_body), false);
         results = new LinearLayout(this); results.setOrientation(LinearLayout.VERTICAL); results.setId(R.id.archive_results);
         add(content, results, 0);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

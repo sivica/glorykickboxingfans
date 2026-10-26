@@ -46,6 +46,9 @@
     <string name="archive_provenance_action">Data, coverage and provenance</string>
     <string name="archive_provenance_title">About this demonstration</string>
     <string name="archive_revision">Bundled dataset · Revision %1$d</string>
+    <string name="archive_saved_revision">Saved dataset · Revision %1$d</string>
+    <string name="archive_saved_title">Saved offline demo</string>
+    <string name="archive_saved_body">Validated fictional cards stored on this device. Available without a connection. Not affiliated with GLORY.</string>
     <string name="archive_close">Close</string>
     <string name="archive_error_title">Archive unavailable</string>
     <string name="archive_error_body">The bundled demonstration could not be read. No results have been substituted. Reopen the app to try again.</string>

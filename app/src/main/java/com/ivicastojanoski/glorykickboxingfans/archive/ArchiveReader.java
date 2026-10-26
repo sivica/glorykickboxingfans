@@ -7,6 +7,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
+import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -14,22 +16,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-/** Strict bundled JSON adapter. Never queries a service, installs data or substitutes sample results on error. */
+/** Strict UTF-8 JSON adapter for bundled/validated saved data. No service calls or substituted results. */
 public final class ArchiveReader {
+    public static final int MAX_JSON_BYTES = ArchiveJsonSyntax.MAX_BYTES;
+    public static final int MAX_JSON_DEPTH = ArchiveJsonSyntax.MAX_DEPTH;
     private ArchiveReader() {}
     public static Archive read(InputStream input) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte[] chunk = new byte[4096];
         int count;
         while ((count = input.read(chunk)) != -1) {
-            if (buffer.size() + count > 1024 * 1024) throw new IOException("Bundled archive exceeds size limit");
+            if (buffer.size() + count > MAX_JSON_BYTES) throw new IOException("Archive exceeds size limit");
             buffer.write(chunk, 0, count);
         }
-        try { return parse(new String(buffer.toByteArray(), StandardCharsets.UTF_8)); }
-        catch (JSONException | IllegalArgumentException exception) { throw new IOException("Bundled archive is invalid", exception); }
+        try { return parse(StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
+                .onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(buffer.toByteArray())).toString()); }
+        catch (JSONException | IllegalArgumentException exception) { throw new IOException("Archive is invalid", exception); }
     }
 
     public static Archive parse(String json) throws JSONException {
+        ArchiveJsonSyntax.validate(json);
         JSONObject root = new JSONObject(json);
         keys(root, "schema_version id revision kind title notice coverage sources fighters events corrections");
         Archive.require(number(root, "schema_version") == 1 && string(root, "kind").equals("synthetic-demo"), "Unsupported archive schema/kind");

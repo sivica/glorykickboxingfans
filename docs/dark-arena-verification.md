@@ -1,5 +1,8 @@
 # Dark Arena native UI verification
 
+This record covers the reviewed UI base at802b497. Subsequent disabled-update
+loader changes have [separate verification and limits](archive-updates.md).
+
 Tested source: `9e6d85c8cf747151eeb906726088640781f910a7`, main-source tree
 `56a30a18d8450c1a9458593b04ef6e846dca7c55`. PR3 stays stacked on foundation PR2
 `522753d725ab226bb900ba65f80455441b884814`. Subsequent documentation/capture
